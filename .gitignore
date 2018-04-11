@@ -1,0 +1,7 @@
+# IntelliJ IDEA project directory
+.idea/
+
+# Maven target files
+target/
+
+obdsm-2.iml
