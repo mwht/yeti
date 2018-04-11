@@ -27,12 +27,12 @@
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@gfx/placeholder.png" />
+                              <Image url="@../gfx/placeholder.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                            <image>
-                              <Image url="@gfx/placeholder.png" />
+                              <Image url="@../gfx/placeholder.png" />
                            </image>
                         </ImageView>
                      </children>
