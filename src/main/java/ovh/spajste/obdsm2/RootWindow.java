@@ -17,7 +17,7 @@ public class RootWindow extends Application {
     public void start(Stage primaryStage) {
         try {
             AnchorPane root = FXMLLoader.load(RootWindow.class.getResource("/fxml/RootWindow.fxml"));
-            primaryStage.setScene(new Scene(root, 700, 460));
+            primaryStage.setScene(new Scene(root, 700, 600));
             primaryStage.setTitle("OBDSM-II by SpajsTech Ltd. 2018");
             primaryStage.show();
         } catch(IOException ioe) {
