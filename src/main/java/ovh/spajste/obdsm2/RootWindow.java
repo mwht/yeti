@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class RootWindow extends Application {
+    public static SerialCommunication serial = new SerialCommunication();
     public static void main(String[] args) {
         launch(args);
     }
