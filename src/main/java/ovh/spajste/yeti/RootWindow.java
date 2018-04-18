@@ -1,4 +1,4 @@
-package ovh.spajste.obdsm2;
+package ovh.spajste.yeti;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +19,7 @@ public class RootWindow extends Application {
         try {
             AnchorPane root = FXMLLoader.load(RootWindow.class.getResource("/fxml/RootWindow.fxml"));
             primaryStage.setScene(new Scene(root, 700, 600));
-            primaryStage.setTitle("OBDSM-II by SpajsTech Ltd. 2018");
+            primaryStage.setTitle("Yeti by SpajsTech Ltd. 2018");
             primaryStage.show();
         } catch(IOException ioe) {
             System.err.println("IOException caught during start: "+ioe.getLocalizedMessage());

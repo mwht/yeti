@@ -1,4 +1,4 @@
-package ovh.spajste.obdsm2;
+package ovh.spajste.yeti;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;

@@ -74,7 +74,7 @@
           <artifactId>exec-maven-plugin</artifactId>
           <version>1.2.1</version>
           <configuration>
-            <mainClass>ovh.spajste.obdsm2.RootWindow</mainClass>
+            <mainClass>ovh.spajste.yeti.RootWindow</mainClass>
           </configuration>
         </plugin>
       </plugins>

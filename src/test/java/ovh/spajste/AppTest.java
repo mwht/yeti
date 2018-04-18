@@ -1,4 +1,4 @@
-package ovh.spajste.obdsm2;
+package ovh.spajste.yeti;
 
 import org.junit.jupiter.api.Test;
 
