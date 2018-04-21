@@ -1,12 +1,14 @@
-package ovh.spajste.yeti;
+package ovh.spajste.yeti.gui;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import ovh.spajste.yeti.RootWindow;
 
-public class fxmlController {
+public class RootMenuController {
     @FXML
-    private Menu portMenu;
+    private Menu rootMenu;
 
     @FXML public void addPortMenuItem() {
 
@@ -14,12 +16,16 @@ public class fxmlController {
         String[] portsMenuNames = RootWindow.serial.getSerialPortsSystemNames();
 
         for (String s : portsMenuNames) {
-            portMenu.getItems().add(new MenuItem(s));
+            rootMenu.getItems().add(new MenuItem(s));
         }
     }
 
     @FXML public void clearPortMenuItem()
     {
-        portMenu.getItems().remove(1,portMenu.getItems().size());
+        rootMenu.getItems().remove(1,rootMenu.getItems().size());
+    }
+
+    @FXML public void quitItem() {
+        Platform.exit();
     }
 }
