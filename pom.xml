@@ -4,8 +4,8 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>ovh.spajste.obdsm2</groupId>
-  <artifactId>OBDSM-2</artifactId>
+  <groupId>ovh.spajste.yeti</groupId>
+  <artifactId>Yeti</artifactId>
   <version>SNAPSHOT</version>
 
   <name>OBDSM-2</name>

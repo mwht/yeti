@@ -4,6 +4,9 @@ import com.fazecast.jSerialComm.*;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class SerialCommunication {
 
     private SerialPort[] availablePorts = null;
