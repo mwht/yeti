@@ -1,0 +1,54 @@
+package ovh.spajste.yeti;
+
+/**
+ * Readout is abstract class representing generic readout from OBD-II/ELM interface.
+ *
+ * @author Sebastian Madejski
+ */
+public abstract class Readout {
+    private String name;
+    private double value;
+    private String pid;
+
+    /**
+     * Constructor for Readout.
+     */
+    public Readout() {
+        name = "Unknown";
+        value = 0;
+    }
+
+    /**
+     * Constructor for Readout, setting the name parameter.
+     *
+     * @param name Readout name
+     */
+    public Readout(String name) {
+        this.name = name;
+        value = 0;
+    }
+
+    /**
+     *
+     */
+    public abstract void calculateValue();
+    public abstract int getExpectedBytes();
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getValue() {
+        /*
+        TODO: fetch getExpectedBytes() from ELM and calculate it's value
+              or
+              use ELM class for delivering the data
+         */
+        calculateValue();
+        return value;
+    }
+}
