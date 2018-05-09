@@ -45,12 +45,17 @@ public abstract class Readout {
         this.name = name;
     }
 
+    public byte[] getBytes() {
+        // TODO
+    }
+
     public double getValue() {
         /*
         TODO: fetch getExpectedBytes() from ELM and calculate it's value
               or
               use ELM class for delivering the data
          */
+
         calculateValue();
         return value;
     }
