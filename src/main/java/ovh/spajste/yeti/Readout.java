@@ -6,9 +6,11 @@ package ovh.spajste.yeti;
  * @author Sebastian Madejski
  */
 public abstract class Readout {
-    private String name;
-    private double value;
-    private String pid;
+    protected String name;
+    protected double value;
+    protected String pid;
+
+    private final String ERROR_CODE_REGEX = "^7F 12$";
 
     /**
      * Constructor for Readout.
@@ -33,6 +35,7 @@ public abstract class Readout {
      */
     public abstract void calculateValue();
     public abstract int getExpectedBytes();
+    public abstract int getExpectedMode();
 
     public String getName() {
         return name;
