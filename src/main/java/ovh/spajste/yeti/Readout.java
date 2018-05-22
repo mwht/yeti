@@ -47,6 +47,7 @@ public abstract class Readout {
 
     public byte[] getBytes() {
         // TODO
+        return null;
     }
 
     public double getValue() {

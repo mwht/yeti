@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class SerialCommunication {
 
-    private SerialPort[] availablePorts = null;
+    private SerialPort[] availablePorts;
 
     SerialCommunication() {
         availablePorts = SerialPort.getCommPorts();
@@ -20,7 +20,7 @@ public class SerialCommunication {
     }
 
     public String[] getSerialPortsSystemNames() {
-        ArrayList<String> portNames = new ArrayList<String>();
+        ArrayList<String> portNames = new ArrayList<>();
         for (SerialPort port : availablePorts) {
             portNames.add(port.getSystemPortName());
         }
@@ -38,10 +38,19 @@ public class SerialCommunication {
     }
 
 
-    public void openConnection(SerialPort port, int boud)
-    {
-        port.setBaudRate(boud);
-        port.openPort();
+    public void openConnection(SerialPort port, int boud) throws PortNotOpenException {
+        try
+        {
+            port.setBaudRate(boud);
+            if(!port.openPort())
+            {
+                throw new PortNotOpenException("Cold not open port.");
+            }
+        }
+        catch(NullPointerException e)
+        {
+            throw new PortNotOpenException("Could not open port.", e);
+        }
     }
 
     public void closeConnection(SerialPort port)
@@ -50,28 +59,47 @@ public class SerialCommunication {
             port.closePort();
     }
 
-    public byte[] readData(SerialPort port, long amountOfBytesToRead)
-    {
-        if(!port.isOpen())
+    public byte[] waitAndReadData(SerialPort port) throws PortNotOpenException {
+        try
         {
-            /*
-                TODO: Throw exception about not open port
-
-             */
+            while (port.bytesAvailable() == 0) {}
+            int amountOfBytesToRead = port.bytesAvailable();
+            byte[] bytesToRead = new byte[amountOfBytesToRead];
+            port.readBytes(bytesToRead, amountOfBytesToRead);
+            return bytesToRead;
         }
-        byte[] bytesToRead = new byte[(int)amountOfBytesToRead];
-        port.readBytes(bytesToRead, amountOfBytesToRead);
-        return bytesToRead;
+        catch(NullPointerException e)
+        {
+            throw new PortNotOpenException("Port is not open.", e);
+        }
 
     }
 
-    public void sendData(SerialPort port, byte[] dataToBeSend,long amountOfBytesToSend)
-    {
-        if(port.writeBytes(dataToBeSend, amountOfBytesToSend) == -1)
+    public byte[] readData(SerialPort port) throws PortNotOpenException {
+        try
         {
-            /*
-                TODO: Throw exception about not sucessfuly send data
-             */
+            int amountOfBytesToRead = port.bytesAvailable();
+            byte[] bytesToRead = new byte[amountOfBytesToRead];
+            port.readBytes(bytesToRead, amountOfBytesToRead);
+            return bytesToRead;
+        }
+        catch(NullPointerException e)
+        {
+            throw new PortNotOpenException("Port is not open.", e);
+        }
+
+    }
+
+    public void sendData(SerialPort port, byte[] dataToBeSend) throws PortNotOpenException, SerialSendDataException {
+        try
+        {
+            if(port.writeBytes(dataToBeSend, dataToBeSend.length) == -1) {
+                throw new SerialSendDataException("Could not write data.");
+            }
+        }
+        catch(NullPointerException e)
+        {
+            throw new PortNotOpenException("Could not open port", e);
         }
     }
 }

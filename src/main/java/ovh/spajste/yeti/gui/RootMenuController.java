@@ -6,23 +6,38 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import ovh.spajste.yeti.RootWindow;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 public class RootMenuController {
     @FXML
-    private Menu rootMenu;
+    private Menu portMenu;
+    private String[] portsMenuNames = RootWindow.serial.getSerialPortsSystemNames();
 
-    @FXML public void addPortMenuItem() {
-
+    @FXML public void addPortMenuItem()
+    {
         RootWindow.serial.rescanSerialPorts();
-        String[] portsMenuNames = RootWindow.serial.getSerialPortsSystemNames();
-
-        for (String s : portsMenuNames) {
-            rootMenu.getItems().add(new MenuItem(s));
+        if(RootWindow.serial.getSerialPortsSystemNames().length != 0)
+        {
+            portMenu.getItems().remove(0,1);
+        }
+        if(portsMenuNames.length == RootWindow.serial.getSerialPortsSystemNames().length)
+        {
+            if(!Collections.disjoint(Arrays.asList(portsMenuNames), Arrays.asList(RootWindow.serial.getSerialPortsSystemNames())))
+            {
+                for (String s : portsMenuNames)
+                {
+                   // System.out.println(s);
+                    portMenu.getItems().add(new MenuItem(s));
+                }
+            }
         }
     }
 
     @FXML public void clearPortMenuItem()
     {
-        rootMenu.getItems().remove(1,rootMenu.getItems().size());
+        portMenu.getItems().remove(0,portMenu.getItems().size());
+        portMenu.getItems().add(new MenuItem("Empty"));
     }
 
     @FXML public void quitItem() {

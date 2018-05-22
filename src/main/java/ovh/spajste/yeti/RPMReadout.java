@@ -5,7 +5,7 @@ public class RPMReadout extends Readout {
     public RPMReadout() {
         name = "RPM";
         value = 0;
-        pid = "0C";
+        pid = 0x0C;
     }
 
     public void calculateValue() {
