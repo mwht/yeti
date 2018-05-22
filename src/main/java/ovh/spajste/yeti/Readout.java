@@ -8,7 +8,7 @@ package ovh.spajste.yeti;
 public abstract class Readout {
     protected String name;
     protected double value;
-    protected String pid;
+    protected byte pid;
 
     private final String ERROR_CODE_REGEX = "^7F 12$";
 
