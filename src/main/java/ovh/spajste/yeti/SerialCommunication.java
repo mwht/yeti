@@ -5,7 +5,7 @@ import com.fazecast.jSerialComm.*;
 import java.util.ArrayList;
 
 /**
- * @author Michał Łukiański
+ * @author Michał Łukiański (@Lukkario)
  */
 public class SerialCommunication {
 
