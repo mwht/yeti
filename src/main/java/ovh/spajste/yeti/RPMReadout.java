@@ -10,7 +10,7 @@ public class RPMReadout extends Readout {
     }
 
     public void calculateValue() {
-
+        value = ((256*readoutBuffer[0])+readoutBuffer[1])/4;
     }
 
     public int getExpectedBytes() {
