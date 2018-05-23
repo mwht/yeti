@@ -18,6 +18,6 @@ public class RPMReadout extends Readout {
     }
 
     public int getExpectedMode() {
-        return 4;
+        return 0x41;
     }
 }
