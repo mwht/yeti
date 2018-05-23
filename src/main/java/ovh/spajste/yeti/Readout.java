@@ -69,4 +69,14 @@ public abstract class Readout {
         calculateValue();
         return value;
     }
+
+    public void setActive(boolean status)
+    {
+        active = status;
+    }
+
+    public boolean getActive()
+    {
+        return active;
+    }
 }
