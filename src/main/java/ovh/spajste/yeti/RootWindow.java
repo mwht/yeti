@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class RootWindow extends Application {
     public static SerialCommunication serial = new SerialCommunication();
+    public static ELMInterface elmInterface;
     public static void main(String[] args) {
         launch(args);
     }
@@ -21,6 +22,8 @@ public class RootWindow extends Application {
             primaryStage.setScene(new Scene(root, 700, 600));
             primaryStage.setTitle("Yeti by SpajsTech Ltd. 2018");
             primaryStage.show();
+            elmInterface = new ELMInterface();
+            elmInterface.initialize("/dev/ttyUSB0");
         } catch(IOException ioe) {
             System.err.println("IOException caught during start: "+ioe.getLocalizedMessage());
         }
