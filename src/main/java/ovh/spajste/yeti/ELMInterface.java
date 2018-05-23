@@ -82,7 +82,7 @@ public class ELMInterface {
 
             serialCommunication.sendData(serialPort,"AT SP 0\n".getBytes());
             String fullResponse = new String(serialCommunication.waitAndReadData(serialPort));
-            if(Pattern.matches("/FAIL/",fullResponse)) {
+            /*if(Pattern.matches("/FAIL/",fullResponse)) {
                 // TODO: iterate through all protocol until success (@mwht)
             } else {
                 Matcher match = Pattern.compile("^AUTO, (.*)").matcher(fullResponse);
@@ -91,12 +91,12 @@ public class ELMInterface {
                 } else {
                     throw new Exception("Cannot initialize ELM interface - no matching protocol found");
                 }
-            }
+            }*/
 
             // --- read down all PIDs ---
             serialCommunication.sendData(serialPort,"0100\n".getBytes());
-            serialCommunication.waitAndReadData(serialPort); // INIT...
-            serialCommunication.waitAndReadData(serialPort); // OK/FAIL
+            serialCommunication.waitAndReadData(serialPort); // INIT.../SEARCHING...
+            serialCommunication.waitAndReadData(serialPort); // OK/FAIL/(actual PIDs, depends whether automatic selection was selected)
             currentState = ConnectionState.CONNECTED;
             // TODO: readout all pids
             /*byte[] pidRawData = convertELMdataToByteArray(new String(serialCommunication.waitAndReadData(serialPort)));
@@ -115,20 +115,21 @@ public class ELMInterface {
                 @Override
                 public void run() {
                     try {
-
-                        String rawData = new String(serialCommunication.waitAndReadData(serialPort));
-                        byte[] elmData = convertELMdataToByteArray(extractData(rawData));
-                        readouts.forEach((readout) -> {
-                            if (elmData[1] == readout.getPid()) {
-                                readout.setReadoutBuffer(Arrays.copyOfRange(elmData, 2, elmData.length));
-                                try {
-                                    System.out.println(readout.getName() + ": " + readout.getValue());
-                                } catch(InvalidReadoutException ine) {
-                                    System.err.println(ine.getMessage());
+                        while(true) {
+                            String rawData = new String(serialCommunication.waitAndReadData(serialPort));
+                            byte[] elmData = convertELMdataToByteArray(extractData(rawData));
+                            readouts.forEach((readout) -> {
+                                if (elmData[1] == readout.getPid()) {
+                                    readout.setReadoutBuffer(Arrays.copyOfRange(elmData, 2, elmData.length));
+                                    try {
+                                        System.out.println(readout.getName() + ": " + readout.getValue());
+                                    } catch (InvalidReadoutException ine) {
+                                        System.err.println(ine.getMessage());
+                                    }
                                 }
-                            }
-                        });
-                        Thread.sleep(100);
+                            });
+                            Thread.sleep(100);
+                        }
                     } catch(Exception e) {
                         System.err.println("Exception in readout dispatcher: "+e.getClass().getName()+" - "+e.getMessage());
                     }
