@@ -2,8 +2,10 @@ package ovh.spajste.yeti;
 
 import com.fazecast.jSerialComm.SerialPort;
 
+import javax.xml.bind.DatatypeConverter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * ELMInterface is class providing an abstraction layer with ELM327 interface.
@@ -65,9 +67,23 @@ public class ELMInterface {
 
             serialCommunication.sendData(serialPort,"ATZ\n".getBytes()); // query ELM for identification string
             name = new String(serialCommunication.waitAndReadData(serialPort)); // read ELM ID string
+
+            serialCommunication.sendData(serialPort,"AT SP 0\n".getBytes());
+            String fullResponse = new String(serialCommunication.waitAndReadData(serialPort));
+            if(Pattern.matches("/FAIL/",fullResponse)) {
+                // TODO: iterate through all protocol until success (@mwht)
+            } else if (Pattern.matches("^AUTO, (.*)",fullResponse)) {
+
+            }
+
         } catch(Exception e) {
             System.err.println("Exception caught in ELMInterface: "+e.getClass().getName()+" - "+e.getMessage());
         }
+    }
+
+    public static byte[] convertELMdataToByteArray(String s) {
+
+        return DatatypeConverter.parseHexBinary(s.replace(" ",""));
     }
 
     public String getName() {
