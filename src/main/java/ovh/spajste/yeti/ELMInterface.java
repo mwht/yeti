@@ -42,6 +42,14 @@ public class ELMInterface {
         ISO_15765_4_CAN_29BIT_ID_250KBAUD
     };
 
+    private enum ConnectionState {
+        NOT_INITIALIZED,
+        INITIALIZING,
+        CONNECTED,
+        CLOSED,
+        ERROR
+    };
+    private ConnectionState currentState;
     /**
      * Constructor for ELMInterface.
      */
@@ -51,6 +59,7 @@ public class ELMInterface {
         readouts = new ArrayList<>();
         serialCommunication = new SerialCommunication();
         selectedPort = "";
+        currentState = ConnectionState.NOT_INITIALIZED;
     }
 
     /**
@@ -64,6 +73,7 @@ public class ELMInterface {
     public void initialize(String portName) {
         selectedPort = portName; // set port name
         try {
+            currentState = ConnectionState.INITIALIZING;
             serialPort = serialCommunication.selectPort(portName); // select serial port specified in portName param
             serialCommunication.openConnection(serialPort,38400); // initialize select port with 38400 baud rate
 
@@ -87,7 +97,7 @@ public class ELMInterface {
             serialCommunication.sendData(serialPort,"0100\n".getBytes());
             serialCommunication.waitAndReadData(serialPort); // INIT...
             serialCommunication.waitAndReadData(serialPort); // OK/FAIL
-
+            currentState = ConnectionState.CONNECTED;
             // TODO: readout all pids
             /*byte[] pidRawData = convertELMdataToByteArray(new String(serialCommunication.waitAndReadData(serialPort)));
             if(((pidRawData[0] & 0xF0) >> 4) == 4 && pidRawData[1] == 0x00) {
@@ -105,6 +115,7 @@ public class ELMInterface {
                 @Override
                 public void run() {
                     try {
+
                         String rawData = new String(serialCommunication.waitAndReadData(serialPort));
                         if(Pattern.matches("/[0-9A-F]{2}\\s?/g",rawData)) {
                             byte[] elmData = convertELMdataToByteArray(rawData.trim());
@@ -121,6 +132,18 @@ public class ELMInterface {
                     }
                 }
             });
+            readoutDispatchThread.start();
+        } catch(Exception e) {
+            System.err.println("Exception caught in ELMInterface: "+e.getClass().getName()+" - "+e.getMessage());
+            currentState = ConnectionState.ERROR;
+        }
+    }
+
+    public void close() {
+        try {
+            serialCommunication.sendData(serialPort,"AT PC\n".getBytes());
+            serialCommunication.closeConnection(serialPort);
+            currentState = ConnectionState.CLOSED;
         } catch(Exception e) {
             System.err.println("Exception caught in ELMInterface: "+e.getClass().getName()+" - "+e.getMessage());
         }
