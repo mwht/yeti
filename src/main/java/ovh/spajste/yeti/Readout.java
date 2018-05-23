@@ -19,7 +19,7 @@ public abstract class Readout {
     public Readout() {
         name = "Unknown";
         value = 0;
-        unit = "";
+        unit = "?";
     }
 
     /**
