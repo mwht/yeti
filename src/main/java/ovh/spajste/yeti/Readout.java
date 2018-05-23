@@ -70,6 +70,10 @@ public abstract class Readout {
         return value;
     }
 
+    public byte getPid() {
+        return pid;
+    }
+
     public void setActive(boolean status)
     {
         active = status;
