@@ -11,6 +11,7 @@ public abstract class Readout {
     protected byte pid;
     protected String unit;
     protected byte[] readoutBuffer;
+    protected boolean active = false;
 
     private final String ERROR_CODE_REGEX = "^7F 12$";
 
@@ -21,6 +22,7 @@ public abstract class Readout {
         name = "Unknown";
         value = 0;
         unit = "?";
+        active = false;
     }
 
     /**
