@@ -23,7 +23,7 @@ public class RootWindow extends Application {
             primaryStage.setTitle("Yeti by SpajsTech Ltd. 2018");
             primaryStage.show();
             elmInterface = new ELMInterface();
-            elmInterface.initialize("/dev/ttyUSB0");
+            elmInterface.initialize("ttyUSB0");
         } catch(IOException ioe) {
             System.err.println("IOException caught during start: "+ioe.getLocalizedMessage());
         }
