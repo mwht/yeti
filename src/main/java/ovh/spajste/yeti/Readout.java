@@ -13,8 +13,6 @@ public abstract class Readout {
     protected byte[] readoutBuffer;
     protected boolean active = false;
 
-    private final String ERROR_CODE_REGEX = "^7F 12$";
-
     /**
      * Constructor for Readout.
      */
@@ -62,9 +60,9 @@ public abstract class Readout {
         this.unit = unit;
     }
 
-    public double getValue() {
+    public double getValue() throws InvalidReadoutException {
         if(readoutBuffer.length != getExpectedBytes()) {
-            // TODO: throw invalid readout exception
+            throw new InvalidReadoutException("Invalid number of bytes (readout type mismatch?)");
         }
         calculateValue();
         return value;
