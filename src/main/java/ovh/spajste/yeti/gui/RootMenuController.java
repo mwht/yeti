@@ -2,6 +2,7 @@ package ovh.spajste.yeti.gui;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import ovh.spajste.yeti.RootWindow;
