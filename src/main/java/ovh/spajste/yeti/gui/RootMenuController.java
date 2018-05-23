@@ -13,6 +13,7 @@ public class RootMenuController {
     @FXML
     private Menu portMenu;
     private String[] portsMenuNames = RootWindow.serial.getSerialPortsSystemNames();
+    private Label rpmlabel;
 
     @FXML public void addPortMenuItem()
     {
@@ -42,5 +43,10 @@ public class RootMenuController {
 
     @FXML public void quitItem() {
         Platform.exit();
+    }
+
+    @FXML public void fillRpmLabel()
+    {
+        rpmlabel.setText("test");
     }
 }

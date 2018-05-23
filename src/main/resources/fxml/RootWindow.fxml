@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.StackedAreaChart?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
 <AnchorPane prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ovh.spajste.yeti.gui.RootMenuController">
    <children>
       <TabPane layoutY="28.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
@@ -16,51 +40,18 @@
                      <children>
                         <ScrollPane fitToWidth="true" prefHeight="545.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <content>
-                            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity">
+                            <AnchorPane fx:id="rpmTextArea" prefHeight="545.0" prefWidth="700.0">
                                  <children>
-                                    <GridPane cacheHint="SCALE" focusTraversable="true" gridLinesVisible="true" prefHeight="700.0" prefWidth="681.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                      <columnConstraints>
-                                        <ColumnConstraints percentWidth="50.0" />
-                                        <ColumnConstraints percentWidth="50.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                                      </rowConstraints>
-                                       <children>
-                                          <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../gfx/placeholder.png" />
-                                             </image>
-                                          </ImageView>
-                                          <ImageView fitHeight="150.0" fitWidth="200.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
-                                             <image>
-                                                <Image url="@../gfx/placeholder.png" />
-                                             </image>
-                                          </ImageView>
-                                          <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
-                                             <image>
-                                                <Image url="@../gfx/placeholder.png" />
-                                             </image>
-                                          </ImageView>
-                                          <ImageView fitHeight="150.0" fitWidth="200.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                                             <image>
-                                                <Image url="@../gfx/placeholder.png" />
-                                             </image>
-                                          </ImageView>
-                                          <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
-                                             <image>
-                                                <Image url="@../gfx/placeholder.png" />
-                                             </image>
-                                          </ImageView>
-                                          <ImageView fitHeight="150.0" fitWidth="200.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
-                                             <image>
-                                                <Image url="@../gfx/placeholder.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
-                                    </GridPane>
+                                    <CheckBox mnemonicParsing="false" text="CheckBox" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="170.0" />
+                                    <CheckBox layoutX="39.0" layoutY="80.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="88.0" text="RPM " AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0" />
+                                    <CheckBox layoutX="42.0" layoutY="52.0" mnemonicParsing="false" text="CheckBox" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="80.0" />
+                                    <CheckBox layoutX="42.0" layoutY="24.0" mnemonicParsing="false" text="CheckBox" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="110.0">
+                                       <padding>
+                                          <Insets bottom="30.0" />
+                                       </padding>
+                                    </CheckBox>
+                                    <CheckBox mnemonicParsing="false" text="CheckBox" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="140.0" />
+                                    <Label fx:id="rpmlabel" layoutX="164.0" layoutY="53.0" prefHeight="15.0" prefWidth="104.0" text="N/A" />
                                  </children>
                               </AnchorPane>
                           </content>

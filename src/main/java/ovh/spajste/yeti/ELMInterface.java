@@ -100,10 +100,21 @@ public class ELMInterface {
                 System.err.println("fail");
             }*/
             serialCommunication.waitAndReadData(serialPort);
+            readouts.add(new RPMReadout());
             readoutDispatchThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
+                        String rawData = new String(serialCommunication.waitAndReadData(serialPort));
+                        if(Pattern.matches("/[0-9A-F]{2}\\s?/g",rawData)) {
+                            byte[] elmData = convertELMdataToByteArray(rawData.trim());
+                            readouts.forEach((readout) -> {
+                                if (elmData[1] == readout.getPid()) {
+                                    readout.setReadoutBuffer(Arrays.copyOfRange(elmData, 2, elmData.length));
+                                    System.out.println(readout.getName() + ": " + readout.getValue());
+                                }
+                            });
+                        }
                         Thread.sleep(100);
                     } catch(Exception e) {
                         System.err.println("Exception in readout dispatcher: "+e.getClass().getName()+" - "+e.getMessage());
