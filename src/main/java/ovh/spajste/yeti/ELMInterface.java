@@ -100,6 +100,16 @@ public class ELMInterface {
                 System.err.println("fail");
             }*/
             serialCommunication.waitAndReadData(serialPort);
+            readoutDispatchThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(100);
+                    } catch(Exception e) {
+                        System.err.println("Exception in readout dispatcher: "+e.getClass().getName()+" - "+e.getMessage());
+                    }
+                }
+            });
         } catch(Exception e) {
             System.err.println("Exception caught in ELMInterface: "+e.getClass().getName()+" - "+e.getMessage());
         }
