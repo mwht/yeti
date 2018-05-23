@@ -66,6 +66,7 @@ public class SerialCommunication {
             int amountOfBytesToRead = port.bytesAvailable();
             byte[] bytesToRead = new byte[amountOfBytesToRead];
             port.readBytes(bytesToRead, amountOfBytesToRead);
+            System.out.println("<-- "+new String(bytesToRead));
             return bytesToRead;
         }
         catch(NullPointerException e)
@@ -93,6 +94,7 @@ public class SerialCommunication {
     public void sendData(SerialPort port, byte[] dataToBeSend) throws PortNotOpenException, SerialSendDataException {
         try
         {
+            System.out.println("--> "+new String(dataToBeSend));
             if(port.writeBytes(dataToBeSend, dataToBeSend.length) == -1) {
                 throw new SerialSendDataException("Could not write data.");
             }
