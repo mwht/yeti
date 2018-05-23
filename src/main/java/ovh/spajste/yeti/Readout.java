@@ -9,6 +9,7 @@ public abstract class Readout {
     protected String name;
     protected double value;
     protected byte pid;
+    protected String unit;
 
     private final String ERROR_CODE_REGEX = "^7F 12$";
 
@@ -18,6 +19,7 @@ public abstract class Readout {
     public Readout() {
         name = "Unknown";
         value = 0;
+        unit = "";
     }
 
     /**
@@ -48,6 +50,14 @@ public abstract class Readout {
     public byte[] getBytes() {
         // TODO
         return null;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     public double getValue() {
