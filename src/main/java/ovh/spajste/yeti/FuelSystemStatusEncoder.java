@@ -36,7 +36,7 @@ public class FuelSystemStatusEncoder{
                     }
             }
             catch (NullPointerException e){
-                throw new NullPointerException("Incorected receive data");
+                throw new NullPointerException("Incorrect data received");
             }
             return "Unknown Fuel System Status";
         }
