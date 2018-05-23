@@ -10,6 +10,7 @@ public abstract class Readout {
     protected double value;
     protected byte pid;
     protected String unit;
+    protected byte[] readoutBuffer;
 
     private final String ERROR_CODE_REGEX = "^7F 12$";
 
@@ -47,9 +48,8 @@ public abstract class Readout {
         this.name = name;
     }
 
-    public byte[] getBytes() {
-        // TODO
-        return null;
+    public void setReadoutBuffer(byte[] readoutBuffer) {
+        this.readoutBuffer = readoutBuffer;
     }
 
     public String getUnit() {
@@ -61,12 +61,9 @@ public abstract class Readout {
     }
 
     public double getValue() {
-        /*
-        TODO: fetch getExpectedBytes() from ELM and calculate it's value
-              or
-              use ELM class for delivering the data
-         */
-
+        if(readoutBuffer.length != getExpectedBytes()) {
+            // TODO: throw invalid readout exception
+        }
         calculateValue();
         return value;
     }
