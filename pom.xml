@@ -6,9 +6,9 @@
 
   <groupId>ovh.spajste.yeti</groupId>
   <artifactId>Yeti</artifactId>
-  <version>SNAPSHOT</version>
+  <version>0.1-SNAPSHOT</version>
 
-  <name>OBDSM-2</name>
+  <name>Yeti</name>
   <url>http://spajste.ovh</url>
 
   <properties>
