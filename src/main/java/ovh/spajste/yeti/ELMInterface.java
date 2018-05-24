@@ -77,11 +77,11 @@ public class ELMInterface {
             serialPort = serialCommunication.selectPort(portName); // select serial port specified in portName param
             serialCommunication.openConnection(serialPort,38400); // initialize select port with 38400 baud rate
 
-            serialCommunication.sendData(serialPort,"ATZ\n".getBytes()); // query ELM for identification string
-            name = new String(serialCommunication.waitAndReadData(serialPort)); // read ELM ID string
+            //serialCommunication.sendData(serialPort,"ATZ\n".getBytes()); // query ELM for identification string
+            //name = new String(serialCommunication.waitAndReadData(serialPort)); // read ELM ID string
 
-            serialCommunication.sendData(serialPort,"AT SP 0\n".getBytes());
-            String fullResponse = new String(serialCommunication.waitAndReadData(serialPort));
+            //serialCommunication.sendData(serialPort,"AT SP 0\n".getBytes());
+            //String fullResponse = new String(serialCommunication.waitAndReadData(serialPort));
             /*if(Pattern.matches("/FAIL/",fullResponse)) {
                 // TODO: iterate through all protocol until success (@mwht)
             } else {
@@ -94,9 +94,9 @@ public class ELMInterface {
             }*/
 
             // --- read down all PIDs ---
-            serialCommunication.sendData(serialPort,"0100\n".getBytes());
-            serialCommunication.waitAndReadData(serialPort); // INIT.../SEARCHING...
-            serialCommunication.waitAndReadData(serialPort); // OK/FAIL/(actual PIDs, depends whether automatic selection was selected)
+            //serialCommunication.sendData(serialPort,"0100\n".getBytes());
+            //serialCommunication.waitAndReadData(serialPort); // INIT.../SEARCHING...
+            //serialCommunication.waitAndReadData(serialPort); // OK/FAIL/(actual PIDs, depends whether automatic selection was selected)
             currentState = ConnectionState.CONNECTED;
             // TODO: readout all pids
             /*byte[] pidRawData = convertELMdataToByteArray(new String(serialCommunication.waitAndReadData(serialPort)));
@@ -109,26 +109,30 @@ public class ELMInterface {
             } else {
                 System.err.println("fail");
             }*/
-            serialCommunication.waitAndReadData(serialPort);
+            //serialCommunication.waitAndReadData(serialPort);
             readouts.add(new RPMReadout());
             readoutDispatchThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         while(true) {
+			    serialCommunication.sendData(serialPort,"010C\n".getBytes());
                             String rawData = new String(serialCommunication.waitAndReadData(serialPort));
-                            byte[] elmData = convertELMdataToByteArray(extractData(rawData));
+                            byte[] elmData = convertELMdataToByteArray(extractData(rawData.substring(5)));
+			    System.out.println(elmData.length);
                             readouts.forEach((readout) -> {
-                                if (elmData[1] == readout.getPid()) {
-                                    readout.setReadoutBuffer(Arrays.copyOfRange(elmData, 2, elmData.length));
-                                    try {
-                                        System.out.println(readout.getName() + ": " + readout.getValue());
-                                    } catch (InvalidReadoutException ine) {
-                                        System.err.println(ine.getMessage());
-                                    }
-                                }
+				if(elmData.length > 2) {
+	                                if (elmData[1] == readout.getPid()) {
+	                                    readout.setReadoutBuffer(Arrays.copyOfRange(elmData, 2, elmData.length));
+	                                    try {
+	                                        System.out.println(readout.getName() + ": " + readout.getValue());
+	                                    } catch (InvalidReadoutException ine) {
+	                                        System.err.println(ine.getMessage());
+	                                    }
+                                	}
+				}
                             });
-                            Thread.sleep(100);
+                            Thread.sleep(666);
                         }
                     } catch(Exception e) {
                         System.err.println("Exception in readout dispatcher: "+e.getClass().getName()+" - "+e.getMessage());
@@ -143,13 +147,18 @@ public class ELMInterface {
     }
 
     private String extractData(String input) {
-        Pattern bytePattern = Pattern.compile("[0-9A-F]{2}\\s");
-        Matcher byteMatcher = bytePattern.matcher(input);
-        String result = "";
-        while(byteMatcher.find()) {
-            result += byteMatcher.group();
-        }
-        return result.trim();
+	try {
+        	Pattern bytePattern = Pattern.compile("[0-9A-F]{2}\\s");
+        	Matcher byteMatcher = bytePattern.matcher(input);
+        	String result = "";
+		System.out.println("srogie grzyby: \""+input+"\"");
+        	while(byteMatcher.find()) {
+            		result += byteMatcher.group();
+	        }
+        	return result.trim();
+	} catch(Exception e) {
+	    	return "00 00";
+	}
     }
 
     public void close() {
