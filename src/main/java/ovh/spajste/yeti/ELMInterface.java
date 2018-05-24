@@ -71,8 +71,8 @@ public class ELMInterface {
      * @param portName ELM interface serial port name
      */
     public void initialize(String portName) {
-    	mockLoop();
-    	if(false) {
+    	//mockLoop();
+    	if(true) {
 	        selectedPort = portName; // set port name
 	        try {
 	            currentState = ConnectionState.INITIALIZING;
@@ -126,11 +126,6 @@ public class ELMInterface {
 					if(elmData.length > 2) {
 		                                if (elmData[1] == readout.getPid()) {
 		                                    readout.setReadoutBuffer(Arrays.copyOfRange(elmData, 2, elmData.length));
-		                                    try {
-		                                        System.out.println(readout.getName() + ": " + readout.getValue());
-		                                    } catch (InvalidReadoutException ine) {
-		                                        System.err.println(ine.getMessage());
-		                                    }
 	                                	}
 					}
 	                            });
