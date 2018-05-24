@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 public class ELMInterface {
     /**
      * Identification string reported by ELM interface.
-     * For convinience, it will be referred on as name.
+     * For convenience, it will be referred on as name.
      */
     private String name;
     private String currentProtocol;
@@ -72,79 +72,85 @@ public class ELMInterface {
      */
     public void initialize(String portName) {
     	mockLoop();
-        selectedPort = portName; // set port name
-        try {
-            currentState = ConnectionState.INITIALIZING;
-            serialPort = serialCommunication.selectPort(portName); // select serial port specified in portName param
-            serialCommunication.openConnection(serialPort,38400); // initialize select port with 38400 baud rate
-
-            //serialCommunication.sendData(serialPort,"ATZ\n".getBytes()); // query ELM for identification string
-            //name = new String(serialCommunication.waitAndReadData(serialPort)); // read ELM ID string
-
-            //serialCommunication.sendData(serialPort,"AT SP 0\n".getBytes());
-            //String fullResponse = new String(serialCommunication.waitAndReadData(serialPort));
-            /*if(Pattern.matches("/FAIL/",fullResponse)) {
-                // TODO: iterate through all protocol until success (@mwht)
-            } else {
-                Matcher match = Pattern.compile("^AUTO, (.*)").matcher(fullResponse);
-                if(match.groupCount() > 0) {
-                    currentProtocol = match.group(1);
-                } else {
-                    throw new Exception("Cannot initialize ELM interface - no matching protocol found");
-                }
-            }*/
-
-            // --- read down all PIDs ---
-            //serialCommunication.sendData(serialPort,"0100\n".getBytes());
-            //serialCommunication.waitAndReadData(serialPort); // INIT.../SEARCHING...
-            //serialCommunication.waitAndReadData(serialPort); // OK/FAIL/(actual PIDs, depends whether automatic selection was selected)
-            currentState = ConnectionState.CONNECTED;
-            // TODO: readout all pids
-            /*byte[] pidRawData = convertELMdataToByteArray(new String(serialCommunication.waitAndReadData(serialPort)));
-            if(((pidRawData[0] & 0xF0) >> 4) == 4 && pidRawData[1] == 0x00) {
-                if(pidRawData.length == 6) {
-                    byte[] pidArray = Arrays.copyOfRange(pidRawData,2,6);
-                    int pids = (pidArray[0] << 24) | (pidArray[1] << 16) | (pidArray[2] << 8) | pidArray[3];
-
-                }
-            } else {
-                System.err.println("fail");
-            }*/
-            //serialCommunication.waitAndReadData(serialPort);
-            readouts.add(new RPMReadout());
-            readoutDispatchThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        while(true) {
-			    serialCommunication.sendData(serialPort,"010C\n".getBytes());
-                            String rawData = new String(serialCommunication.waitAndReadData(serialPort));
-                            byte[] elmData = convertELMdataToByteArray(extractData(rawData.substring(5)));
-			    System.out.println(elmData.length);
-                            readouts.forEach((readout) -> {
-				if(elmData.length > 2) {
-	                                if (elmData[1] == readout.getPid()) {
-	                                    readout.setReadoutBuffer(Arrays.copyOfRange(elmData, 2, elmData.length));
-	                                    try {
-	                                        System.out.println(readout.getName() + ": " + readout.getValue());
-	                                    } catch (InvalidReadoutException ine) {
-	                                        System.err.println(ine.getMessage());
-	                                    }
-                                	}
-				}
-                            });
-                            Thread.sleep(666);
-                        }
-                    } catch(Exception e) {
-                        System.err.println("Exception in readout dispatcher: "+e.getClass().getName()+" - "+e.getMessage());
-                    }
-                }
-            });
-            readoutDispatchThread.start();
-        } catch(Exception e) {
-            System.err.println("Exception caught in ELMInterface: "+e.getClass().getName()+" - "+e.getMessage());
-            currentState = ConnectionState.ERROR;
-        }
+    	if(false) {
+	        selectedPort = portName; // set port name
+	        try {
+	            currentState = ConnectionState.INITIALIZING;
+	            serialPort = serialCommunication.selectPort(portName); // select serial port specified in portName param
+	            serialCommunication.openConnection(serialPort,38400); // initialize select port with 38400 baud rate
+	
+	            //serialCommunication.sendData(serialPort,"ATZ\n".getBytes()); // query ELM for identification string
+	            //name = new String(serialCommunication.waitAndReadData(serialPort)); // read ELM ID string
+	
+	            //serialCommunication.sendData(serialPort,"AT SP 0\n".getBytes());
+	            //String fullResponse = new String(serialCommunication.waitAndReadData(serialPort));
+	            /*if(Pattern.matches("/FAIL/",fullResponse)) {
+	                // TODO: iterate through all protocol until success (@mwht)
+	            } else {
+	                Matcher match = Pattern.compile("^AUTO, (.*)").matcher(fullResponse);
+	                if(match.groupCount() > 0) {
+	                    currentProtocol = match.group(1);
+	                } else {
+	                    throw new Exception("Cannot initialize ELM interface - no matching protocol found");
+	                }
+	            }*/
+	
+	            // --- read down all PIDs ---
+	            //serialCommunication.sendData(serialPort,"0100\n".getBytes());
+	            //serialCommunication.waitAndReadData(serialPort); // INIT.../SEARCHING...
+	            //serialCommunication.waitAndReadData(serialPort); // OK/FAIL/(actual PIDs, depends whether automatic selection was selected)
+	            currentState = ConnectionState.CONNECTED;
+	            // TODO: readout all pids
+	            /*byte[] pidRawData = convertELMdataToByteArray(new String(serialCommunication.waitAndReadData(serialPort)));
+	            if(((pidRawData[0] & 0xF0) >> 4) == 4 && pidRawData[1] == 0x00) {
+	                if(pidRawData.length == 6) {
+	                    byte[] pidArray = Arrays.copyOfRange(pidRawData,2,6);
+	                    int pids = (pidArray[0] << 24) | (pidArray[1] << 16) | (pidArray[2] << 8) | pidArray[3];
+	
+	                }
+	            } else {
+	                System.err.println("fail");
+	            }*/
+	            //serialCommunication.waitAndReadData(serialPort);
+	            readouts.add(new RPMReadout());
+	            readoutDispatchThread = new Thread(new Runnable() {
+	                @Override
+	                public void run() {
+	                    try {
+	                        while(true) {
+				    serialCommunication.sendData(serialPort,"010C\n".getBytes());
+	                            String rawData = new String(serialCommunication.waitAndReadData(serialPort));
+	                            byte[] elmData = convertELMdataToByteArray(extractData(rawData.substring(5)));
+				    System.out.println(elmData.length);
+	                            readouts.forEach((readout) -> {
+					if(elmData.length > 2) {
+		                                if (elmData[1] == readout.getPid()) {
+		                                    readout.setReadoutBuffer(Arrays.copyOfRange(elmData, 2, elmData.length));
+		                                    try {
+		                                        System.out.println(readout.getName() + ": " + readout.getValue());
+		                                    } catch (InvalidReadoutException ine) {
+		                                        System.err.println(ine.getMessage());
+		                                    }
+	                                	}
+					}
+	                            });
+	                            Thread.sleep(666);
+	                        }
+	                    } catch(Exception e) {
+	                        System.err.println("Exception in readout dispatcher: "+e.getClass().getName()+" - "+e.getMessage());
+	                    }
+	                }
+	            });
+	            readoutDispatchThread.start();
+	        } catch(Exception e) {
+	            System.err.println("Exception caught in ELMInterface: "+e.getClass().getName()+" - "+e.getMessage());
+	            currentState = ConnectionState.ERROR;
+	        }
+    	}
+    }
+    
+    public List<Readout> getReadoutsData() {
+    	return readouts;
     }
 
     private void mockLoop() {
@@ -152,13 +158,26 @@ public class ELMInterface {
 		readoutDispatchThread = new Thread(() -> {
 			while(true) {
                 try {
-                	
+                	readouts.forEach((readout) -> {
+                		byte iter = 0;
+                		int dir = 1;
+                		byte[] mockBuffer = {
+                			(byte) 0x0B,
+                			(byte) 0x00
+                		};
+                		mockBuffer[1] = iter;
+                		iter += dir;
+                		if(iter == 255) dir = -1;
+                		if(iter == 0) dir = 1;
+                		readout.setReadoutBuffer(mockBuffer);
+                	});
 					Thread.sleep(666);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
 		});
+		readoutDispatchThread.start();
 	}
 
 	private String extractData(String input) {
