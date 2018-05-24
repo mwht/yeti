@@ -91,10 +91,10 @@ public abstract class Readout {
     }
 
     /**
-     * Gets the value of readout. Throws {@link InvalidReadoutException}
+     * Gets the value of readout.
      * 
      * @return value of readout
-     * @throws InvalidReadoutException
+     * @throws InvalidReadoutException thrown on readout type mismatch/invalid byte sequence
      */
     public double getValue() throws InvalidReadoutException {
         if(readoutBuffer.length != getExpectedBytes()) {
@@ -115,7 +115,7 @@ public abstract class Readout {
 
     /**
      * Sets whether readout should be polled by {@link ELMInterface}.
-     * @param active activity status of readout
+     * @param status activity status of readout
      */
     public void setActive(boolean status)
     {
