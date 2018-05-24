@@ -3,6 +3,7 @@ package ovh.spajste.yeti;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.concurrent.*;
@@ -22,7 +23,8 @@ public class RootWindow extends Application {
     public void start(Stage primaryStage) {
         try {
             root = FXMLLoader.load(RootWindow.class.getResource("/fxml/RootWindow.fxml"));
-            primaryStage.setScene(new Scene(root, 700, 600));
+            Scene scene = new Scene(root, 700, 600);
+            primaryStage.setScene(scene);
             primaryStage.setTitle("Yeti by SpajsTech Ltd. 2018");
             primaryStage.show();
             elmInterface = new ELMInterface();
@@ -34,14 +36,16 @@ public class RootWindow extends Application {
 					List<Readout> readouts;
 					while(!isCancelled()) {
 						readouts = elmInterface.getReadoutsData();
-						updateTitle(readouts.get(0).getName()+": "+readouts.get(0).getValue()+readouts.get(0).getUnit());
+						updateMessage(readouts.get(0).getValue()+" "+readouts.get(0).getUnit());
 						Thread.sleep(666);
 					}
 					return null;
 				}
             	
             };
-            primaryStage.titleProperty().bind(rpmTask.titleProperty());
+            Label rpmlabel = (Label) scene.lookup("#rpmlabel");
+            rpmlabel.textProperty().bind(rpmTask.messageProperty());
+          
             new Thread(rpmTask).start();
         } catch(IOException ioe) {
             System.err.println("IOException caught during start: "+ioe.getLocalizedMessage());
