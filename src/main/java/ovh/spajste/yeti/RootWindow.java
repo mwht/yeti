@@ -11,6 +11,7 @@ import java.io.IOException;
 public class RootWindow extends Application {
     public static SerialCommunication serial = new SerialCommunication();
     public static ELMInterface elmInterface;
+    public static AnchorPane root;
     public static void main(String[] args) {
         launch(args);
     }
@@ -18,7 +19,7 @@ public class RootWindow extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            AnchorPane root = FXMLLoader.load(RootWindow.class.getResource("/fxml/RootWindow.fxml"));
+            root = FXMLLoader.load(RootWindow.class.getResource("/fxml/RootWindow.fxml"));
             primaryStage.setScene(new Scene(root, 700, 600));
             primaryStage.setTitle("Yeti by SpajsTech Ltd. 2018");
             primaryStage.show();
