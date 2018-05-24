@@ -5,3 +5,8 @@
 target/
 
 obdsm-2.iml
+
+# Eclipse project files
+.settings/
+.project
+.classpath
