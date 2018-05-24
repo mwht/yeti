@@ -71,6 +71,7 @@ public class ELMInterface {
      * @param portName ELM interface serial port name
      */
     public void initialize(String portName) {
+    	mockLoop();
         selectedPort = portName; // set port name
         try {
             currentState = ConnectionState.INITIALIZING;
@@ -146,7 +147,21 @@ public class ELMInterface {
         }
     }
 
-    private String extractData(String input) {
+    private void mockLoop() {
+		readouts.add(new RPMReadout());
+		readoutDispatchThread = new Thread(() -> {
+			while(true) {
+                try {
+                	
+					Thread.sleep(666);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	private String extractData(String input) {
 	try {
         	Pattern bytePattern = Pattern.compile("[0-9A-F]{2}\\s");
         	Matcher byteMatcher = bytePattern.matcher(input);
