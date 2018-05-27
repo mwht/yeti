@@ -51,7 +51,7 @@
                                        </padding>
                                     </CheckBox>
                                     <CheckBox mnemonicParsing="false" text="CheckBox" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="140.0" />
-                                    <Label fx:id="rpmlabel" layoutX="164.0" layoutY="53.0" prefHeight="15.0" prefWidth="104.0" text="N/A" />
+                                    <Label fx:id="RPMReadoutValue" layoutX="164.0" layoutY="53.0" prefHeight="15.0" prefWidth="104.0" text="N/A" />
                                  </children>
                               </AnchorPane>
                           </content>

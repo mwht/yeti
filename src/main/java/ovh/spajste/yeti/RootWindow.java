@@ -35,8 +35,7 @@ public class RootWindow extends Application {
 				protected Void call() throws Exception {
 					List<Readout> readouts;
 					System.out.println("Task running...");
-					boolean javaToJezykDlaDebili = true;
-					while(javaToJezykDlaDebili) {
+					while(!isCancelled()) {
 						System.out.println("Reading ELM...");
 						readouts = elmInterface.getReadoutsData();
 						try {
@@ -52,7 +51,7 @@ public class RootWindow extends Application {
 				}
             	
             };
-            Label rpmlabel = (Label) scene.lookup("#rpmlabel");          
+            Label rpmlabel = (Label) scene.lookup("#"+RPMReadout.class.getName()+"Value");          
             new Thread(rpmTask).start();
 	    rpmlabel.textProperty().bind(rpmTask.messageProperty());
         } catch(IOException ioe) {
