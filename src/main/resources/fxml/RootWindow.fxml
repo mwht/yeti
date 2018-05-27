@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.chart.CategoryAxis?>
@@ -30,7 +23,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ovh.spajste.yeti.gui.RootMenuController">
+<AnchorPane prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ovh.spajste.yeti.gui.RootMenuController">
    <children>
       <TabPane layoutY="28.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
         <tabs>
@@ -42,16 +35,26 @@
                           <content>
                             <AnchorPane fx:id="rpmTextArea" prefHeight="545.0" prefWidth="700.0">
                                  <children>
-                                    <CheckBox mnemonicParsing="false" text="CheckBox" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="170.0" />
+                                    <CheckBox fx:id="IntakeMainfoldAbsolutePressureActive" mnemonicParsing="false" text="CheckBox" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="170.0" />
                                     <CheckBox layoutX="39.0" layoutY="80.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="88.0" text="RPM " AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0" />
                                     <CheckBox layoutX="42.0" layoutY="52.0" mnemonicParsing="false" text="CheckBox" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="80.0" />
-                                    <CheckBox layoutX="42.0" layoutY="24.0" mnemonicParsing="false" text="CheckBox" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="110.0">
-                                       <padding>
-                                          <Insets bottom="30.0" />
-                                       </padding>
-                                    </CheckBox>
-                                    <CheckBox mnemonicParsing="false" text="CheckBox" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="140.0" />
-                                    <Label fx:id="RPMReadoutValue" layoutX="164.0" layoutY="53.0" prefHeight="15.0" prefWidth="104.0" text="N/A" />
+                                    <CheckBox layoutX="42.0" layoutY="24.0" mnemonicParsing="false" prefHeight="1.0" prefWidth="73.0" text="CheckBox" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="110.0" />
+                                    <CheckBox fx:id="IntakeAirTemperatureActive" mnemonicParsing="false" text="CheckBox" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="140.0" />
+                                    <Label fx:id="RPMReadoutValue" layoutX="284.0" layoutY="52.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
+                                    <Label fx:id="CalculatedEngineLoadValue" layoutX="284.0" layoutY="80.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
+                                    <Label fx:id="EngineCoolantTemperatureValue" layoutX="284.0" layoutY="110.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
+                                    <Label fx:id="IntakeAirTemperatureValue" layoutX="284.0" layoutY="140.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
+                                    <Label fx:id="IntakeMainfoldAbsolutePressureValue" layoutX="284.0" layoutY="170.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
+                                    <CheckBox fx:id="LongTermFuelTrimBank1Active" layoutX="50.0" layoutY="199.0" mnemonicParsing="false" text="CheckBox" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="200.0" />
+                                    <CheckBox fx:id="ShortTemFuelTrimBank1Active" layoutX="50.0" layoutY="233.0" mnemonicParsing="false" text="CheckBox" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="230.0" />
+                                    <CheckBox fx:id="ThrottlePositionActive" layoutX="50.0" layoutY="264.0" mnemonicParsing="false" text="CheckBox" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="260.0" />
+                                    <CheckBox fx:id="TimingAdvanceActive" layoutX="50.0" layoutY="295.0" mnemonicParsing="false" text="CheckBox" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="290.0" />
+                                    <CheckBox fx:id="VehicleSpeedActive" layoutX="50.0" layoutY="327.0" mnemonicParsing="false" text="CheckBox" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="320.0" />
+                                    <Label fx:id="LongTermFuelTrimBank1Value" layoutX="284.0" layoutY="200.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
+                                    <Label fx:id="ShortTemFuelTrimBank1Value" layoutX="284.0" layoutY="230.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
+                                    <Label fx:id="ThrottlePositionValue" layoutX="284.0" layoutY="260.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
+                                    <Label fx:id="TimingAdvanceValue" layoutX="284.0" layoutY="290.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
+                                    <Label fx:id="VehicleSpeedValue" layoutX="284.0" layoutY="320.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
                                  </children>
                               </AnchorPane>
                           </content>

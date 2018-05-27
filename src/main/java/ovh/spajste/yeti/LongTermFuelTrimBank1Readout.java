@@ -1,8 +1,8 @@
 package ovh.spajste.yeti;
 
-public class LongTermFuelTrimBank1 extends Readout {
+public class LongTermFuelTrimBank1Readout extends Readout {
 
-    public LongTermFuelTrimBank1() {
+    public LongTermFuelTrimBank1Readout() {
         name = "Long Term Furel Trim Bank 1";
         value = 0;
         pid = 0x07;
