@@ -56,7 +56,7 @@ public class RootWindow extends Application {
 				}
             	
             };
-            Label rpmlabel = (Label) scene.lookup("#RPMReadoutValue");          
+            Label rpmlabel = (Label) scene.lookup("#"+RPMReadout.class.getSimpleName()+"Value");             
             new Thread(rpmTask).start();
 	    rpmlabel.textProperty().bind(rpmTask.messageProperty());
         } catch(IOException ioe) {
