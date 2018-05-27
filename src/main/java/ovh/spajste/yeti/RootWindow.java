@@ -50,12 +50,13 @@ public class RootWindow extends Application {
 						}
 						Thread.sleep(666);
 					}
+					elmInterface.close();
 					System.out.println("Task ending...");
 					return null;
 				}
             	
             };
-            Label rpmlabel = (Label) scene.lookup("#"+RPMReadout.class.getName()+"Value");          
+            Label rpmlabel = (Label) scene.lookup("#RPMReadoutValue");          
             new Thread(rpmTask).start();
 	    rpmlabel.textProperty().bind(rpmTask.messageProperty());
         } catch(IOException ioe) {

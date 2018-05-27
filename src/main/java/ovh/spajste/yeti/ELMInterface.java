@@ -29,6 +29,7 @@ public class ELMInterface {
     private SerialPort serialPort;
     private String selectedPort;
     private Thread readoutDispatchThread;
+    private boolean readyToClose;
     private enum Protocol {
         AUTOMATIC,
         SAE_J1850_PWM,
@@ -46,6 +47,7 @@ public class ELMInterface {
         NOT_INITIALIZED,
         INITIALIZING,
         CONNECTED,
+        CLOSING,
         CLOSED,
         ERROR
     };
@@ -117,7 +119,7 @@ public class ELMInterface {
 	                @Override
 	                public void run() {
 	                    try {
-	                        while(true) {
+	                        while(currentState != ConnectionState.CLOSING) {
 				    serialCommunication.sendData(serialPort,"010C\n".getBytes());
 	                            String rawData = new String(serialCommunication.waitAndReadData(serialPort));
 	                            byte[] elmData = convertELMdataToByteArray(extractData(rawData.substring(5)));
@@ -131,6 +133,7 @@ public class ELMInterface {
 	                            });
 	                            Thread.sleep(666);
 	                        }
+	                  
 	                    } catch(Exception e) {
 	                        System.err.println("Exception in readout dispatcher: "+e.getClass().getName()+" - "+e.getMessage());
 	                    }
@@ -197,9 +200,11 @@ public class ELMInterface {
 
     public void close() {
         try {
-            serialCommunication.sendData(serialPort,"AT PC\n".getBytes());
-            serialCommunication.closeConnection(serialPort);
-            currentState = ConnectionState.CLOSED;
+        	currentState = ConnectionState.CLOSING;
+        	while(currentState == ConnectionState.CLOSING) {}
+	        serialCommunication.sendData(serialPort,"AT PC\n".getBytes());
+	        serialCommunication.closeConnection(serialPort);
+	        currentState = ConnectionState.CLOSED;
         } catch(Exception e) {
             System.err.println("Exception caught in ELMInterface: "+e.getClass().getName()+" - "+e.getMessage());
         }
