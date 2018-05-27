@@ -7,6 +7,7 @@ public class IntakeMainfoldAbsolutePressureReadout extends Readout {
         value = 0;
         pid = 0x0B;
         unit = "kPa";
+        readoutBuffer = new byte[getExpectedBytes()];
     }
 
     public void calculateValue() {

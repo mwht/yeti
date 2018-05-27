@@ -7,6 +7,7 @@ public class ShortTermFuelTrimBank1Readout extends Readout {
         value = 0;
         pid = 0x06;
         unit = "%";
+        readoutBuffer = new byte[getExpectedBytes()];
     }
 
     public void calculateValue() {

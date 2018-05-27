@@ -7,6 +7,7 @@ public class CalculatedEngineLoadReadout extends Readout {
         value = 0;
         pid = 0x04;
         unit = "%";
+        readoutBuffer = new byte[getExpectedBytes()];
     }
 
     public void calculateValue() {

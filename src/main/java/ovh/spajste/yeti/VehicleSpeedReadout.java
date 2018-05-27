@@ -7,6 +7,7 @@ public class VehicleSpeedReadout extends Readout {
         value = 0;
         pid = 0x0D;
         unit = "km/h";
+        readoutBuffer = new byte[getExpectedBytes()];
     }
 
     public void calculateValue() {

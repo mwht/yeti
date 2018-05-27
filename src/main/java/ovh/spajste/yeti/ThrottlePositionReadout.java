@@ -7,6 +7,7 @@ public class ThrottlePositionReadout extends Readout {
         value = 0;
         pid = 0x11;
         unit = "%";
+        readoutBuffer = new byte[getExpectedBytes()];
     }
 
     public void calculateValue() {

@@ -7,6 +7,7 @@ public class TimingAdvanceReadout extends Readout {
         value = 0;
         pid = 0x0E;
         unit = "°";
+        readoutBuffer = new byte[getExpectedBytes()];
     }
 
     public void calculateValue() {

@@ -7,6 +7,7 @@ public class EngineCoolantTemperatureReadout extends Readout {
         value = 0;
         pid = 0x05;
         unit = "°C";
+        readoutBuffer = new byte[getExpectedBytes()];
     }
 
     public void calculateValue() {
