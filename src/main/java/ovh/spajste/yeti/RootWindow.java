@@ -39,9 +39,13 @@ public class RootWindow extends Application {
 						System.out.println("Reading ELM...");
 						readouts = elmInterface.getReadoutsData();
 						try {
-							updateMessage(readouts.get(0).getValue()+" "+readouts.get(0).getUnit());
-							System.out.println(readouts.get(0).getName()+": "+readouts.get(0).getValue()+" "+readouts.get(0).getUnit());
-						} catch(InvalidReadoutException e) {
+							if(readouts.get(0).isActive()) {
+								updateMessage(readouts.get(0).getValue()+" "+readouts.get(0).getUnit());
+								System.out.println(readouts.get(0).getName()+": "+readouts.get(0).getValue()+" "+readouts.get(0).getUnit());
+							} else {
+								updateMessage("N/A");
+							}
+						} catch(Exception e) {
 							updateMessage("N/A");
 						}
 						Thread.sleep(666);
