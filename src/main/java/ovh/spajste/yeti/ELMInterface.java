@@ -72,7 +72,7 @@ public class ELMInterface {
      */
     public void initialize(String portName) {
     	//mockLoop();
-    	if(true) {
+    	//if(true) {
 	        selectedPort = portName; // set port name
 	        try {
 	            currentState = ConnectionState.INITIALIZING;
@@ -141,11 +141,16 @@ public class ELMInterface {
 	            System.err.println("Exception caught in ELMInterface: "+e.getClass().getName()+" - "+e.getMessage());
 	            currentState = ConnectionState.ERROR;
 	        }
-    	}
+    	//}
     }
     
     public List<Readout> getReadoutsData() {
-    	return readouts;
+    	ArrayList<Readout> newReadouts = new ArrayList<>();
+	readouts.forEach((elem) -> {
+		newReadouts.add(elem);
+		System.out.println("dodajemy chuja");
+	});
+	return newReadouts;
     }
 
     private void mockLoop() {

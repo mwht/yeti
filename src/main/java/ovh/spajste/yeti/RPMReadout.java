@@ -7,6 +7,7 @@ public class RPMReadout extends Readout {
         value = 0;
         pid = 0x0C;
         unit = "rpm";
+        readoutBuffer = new byte[getExpectedBytes()];
     }
 
     public void calculateValue() {

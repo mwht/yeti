@@ -34,19 +34,27 @@ public class RootWindow extends Application {
 				@Override
 				protected Void call() throws Exception {
 					List<Readout> readouts;
-					while(!isCancelled()) {
+					System.out.println("Task running...");
+					boolean javaToJezykDlaDebili = true;
+					while(javaToJezykDlaDebili) {
+						System.out.println("Reading ELM...");
 						readouts = elmInterface.getReadoutsData();
-						updateMessage(readouts.get(0).getValue()+" "+readouts.get(0).getUnit());
+						try {
+							updateMessage(readouts.get(0).getValue()+" "+readouts.get(0).getUnit());
+							System.out.println(readouts.get(0).getName()+": "+readouts.get(0).getValue()+" "+readouts.get(0).getUnit());
+						} catch(InvalidReadoutException e) {
+							updateMessage("N/A");
+						}
 						Thread.sleep(666);
 					}
+					System.out.println("Task ending...");
 					return null;
 				}
             	
             };
-            Label rpmlabel = (Label) scene.lookup("#rpmlabel");
-            rpmlabel.textProperty().bind(rpmTask.messageProperty());
-          
+            Label rpmlabel = (Label) scene.lookup("#rpmlabel");          
             new Thread(rpmTask).start();
+	    rpmlabel.textProperty().bind(rpmTask.messageProperty());
         } catch(IOException ioe) {
             System.err.println("IOException caught during start: "+ioe.getLocalizedMessage());
         }
