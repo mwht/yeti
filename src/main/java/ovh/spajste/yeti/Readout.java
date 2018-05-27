@@ -126,7 +126,7 @@ public abstract class Readout {
      * Gets whether readout should be polled by {@link ELMInterface}.
      * @return activity status of readout
      */
-    public boolean getActive()
+    public boolean isActive()
     {
         return active;
     }
