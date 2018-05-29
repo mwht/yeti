@@ -25,9 +25,6 @@ public abstract class Initialization {
         this.serialCommunication = serialCommunication;
     }
 
-    Initialization() {
-    }
-
     public abstract void reciveProtocolSelectAnswer() throws InitializationException;
     public abstract void reciveInitailizationAnswer() throws InitializationException;
 
