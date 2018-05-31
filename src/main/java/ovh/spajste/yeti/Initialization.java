@@ -10,6 +10,7 @@ public abstract class Initialization {
     protected String protocolSelectSequence;
     protected SerialCommunication serialCommunication;
     protected SerialPort serialPort;
+    protected String expectedSelectProtocolAnswer;
 
     public ArrayList<Byte> availablePIDS = new ArrayList<>();
 
@@ -21,14 +22,15 @@ public abstract class Initialization {
     {
         protocolName = "Unknown";
         protocolSelectSequence = "Unknown";
+        expectedSelectProtocolAnswer = "Unknown";
         this.serialPort = serialPort;
         this.serialCommunication = serialCommunication;
     }
 
-    public abstract void reciveProtocolSelectAnswer() throws InitializationException;
-    public abstract void reciveInitailizationAnswer() throws InitializationException;
+    public abstract void reciveProtocolSelectAnswer() throws InitializationException, PortNotOpenException;
+    public abstract void reciveInitailizationAnswer() throws InitializationException, PortNotOpenException;
 
-    private void extractAvailablePIDS(byte[] pids)
+    public void extractAvailablePIDS(byte[] pids)
     {
             int j = 0;
             for (int i = 0; i < 32; i++)
@@ -50,7 +52,7 @@ public abstract class Initialization {
         elmIdentificator = new String(elmAnswer);
     }
 
-    void initializeProtocol() throws SerialSendDataException, PortNotOpenException, InitializationException {
+    void initialize() throws SerialSendDataException, PortNotOpenException, InitializationException {
         resetElm();
         serialCommunication.sendData(serialPort, protocolSelectSequence.getBytes());
         reciveProtocolSelectAnswer();
