@@ -14,7 +14,7 @@ public abstract class Initialization {
 
     public ArrayList<Byte> availablePIDS = new ArrayList<>();
 
-    private byte[] initializeSequence = {0x01,0x00,0x0A}; // 0100\n
+    private byte[] initializeSequence = {0x30,0x31,0x30,0x30,0x0A}; // 0100\n
     private byte[] elmResetSequence = {0x41,0x54,0x20,0x5A,0x0A}; // AT Z\n
     private String elmIdentificator = "Unknown";
 
@@ -32,6 +32,7 @@ public abstract class Initialization {
 
     public void extractAvailablePIDS(byte[] pids)
     {
+        System.out.println("Available PIDS:");
             int j = 0;
             for (int i = 0; i < 32; i++)
             {
@@ -44,6 +45,10 @@ public abstract class Initialization {
                     availablePIDS.add((byte) i);
                 }
             }
+            availablePIDS.forEach((pid) -> {
+                System.out.print((int)pid+" ");
+            });
+            System.out.println("");
     }
 
     private void resetElm() throws SerialSendDataException, PortNotOpenException {

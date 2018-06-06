@@ -15,6 +15,7 @@ public class RootWindow extends Application {
     public static SerialCommunication serial = new SerialCommunication();
     public static ELMInterface elmInterface;
     public static AnchorPane root;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -22,6 +23,7 @@ public class RootWindow extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
+            Readouts.init();
             root = FXMLLoader.load(RootWindow.class.getResource("/fxml/RootWindow.fxml"));
             Scene scene = new Scene(root, 700, 600);
             primaryStage.setScene(scene);
