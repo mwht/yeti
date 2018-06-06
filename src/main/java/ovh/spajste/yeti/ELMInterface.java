@@ -80,40 +80,17 @@ public class ELMInterface {
 	            currentState = ConnectionState.INITIALIZING;
 	            serialPort = serialCommunication.selectPort(portName); // select serial port specified in portName param
 	            serialCommunication.openConnection(serialPort,38400); // initialize select port with 38400 baud rate
-	
-	            //serialCommunication.sendData(serialPort,"ATZ\n".getBytes()); // query ELM for identification string
-	            //name = new String(serialCommunication.waitAndReadData(serialPort)); // read ELM ID string
-	
-	            //serialCommunication.sendData(serialPort,"AT SP 0\n".getBytes());
-	            //String fullResponse = new String(serialCommunication.waitAndReadData(serialPort));
-	            /*if(Pattern.matches("/FAIL/",fullResponse)) {
-	                // TODO: iterate through all protocol until success (@mwht)
-	            } else {
-	                Matcher match = Pattern.compile("^AUTO, (.*)").matcher(fullResponse);
-	                if(match.groupCount() > 0) {
-	                    currentProtocol = match.group(1);
-	                } else {
-	                    throw new Exception("Cannot initialize ELM interface - no matching protocol found");
-	                }
-	            }*/
-	
-	            // --- read down all PIDs ---
-	            //serialCommunication.sendData(serialPort,"0100\n".getBytes());
-	            //serialCommunication.waitAndReadData(serialPort); // INIT.../SEARCHING...
-	            //serialCommunication.waitAndReadData(serialPort); // OK/FAIL/(actual PIDs, depends whether automatic selection was selected)
-	            currentState = ConnectionState.CONNECTED;
-	            // TODO: readout all pids
-	            /*byte[] pidRawData = convertELMdataToByteArray(new String(serialCommunication.waitAndReadData(serialPort)));
-	            if(((pidRawData[0] & 0xF0) >> 4) == 4 && pidRawData[1] == 0x00) {
-	                if(pidRawData.length == 6) {
-	                    byte[] pidArray = Arrays.copyOfRange(pidRawData,2,6);
-	                    int pids = (pidArray[0] << 24) | (pidArray[1] << 16) | (pidArray[2] << 8) | pidArray[3];
-	
-	                }
-	            } else {
-	                System.err.println("fail");
-	            }*/
-	            //serialCommunication.waitAndReadData(serialPort);
+				Initialization init = new AutoInitialization(serialPort, serialCommunication);
+				try {
+					init.initialize();
+				} catch(Exception e) {
+					System.err.println("bartosz sakowicz ty kurwo: " + e.getClass().getSimpleName() + ": " + e.getMessage());
+				}
+				init.availablePIDS.forEach((pid) -> {
+					if(Readouts.readoutMap.containsKey(pid)) {
+						Readouts.readoutMap.get(pid);
+					}
+				});
 	            readouts.add(new RPMReadout());
 	            readoutDispatchThread = new Thread(new Runnable() {
 	                @Override
@@ -139,7 +116,7 @@ public class ELMInterface {
 	                    }
 	                }
 	            });
-	            readoutDispatchThread.start();
+	            //readoutDispatchThread.start();
 	        } catch(Exception e) {
 	            System.err.println("Exception caught in ELMInterface: "+e.getClass().getName()+" - "+e.getMessage());
 	            currentState = ConnectionState.ERROR;
