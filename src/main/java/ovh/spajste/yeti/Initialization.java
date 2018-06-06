@@ -32,16 +32,11 @@ public abstract class Initialization {
 
     public void extractAvailablePIDS(byte[] pids)
     {
-            int j = 0;
-            for (int i = 0; i < 32; i++)
-            {
-                if(j % 8 == 0 && j != 0)
-                {
-                    j++;
-                }
-                if((pids[j] & (1<<i)) == 1)
-                {
-                    availablePIDS.add((byte) i);
+            for(int i=0;i<4;i++) {
+                for(int j=0;j<8;j++) {
+                    if((pids[i] & (1<<(8-j))) != 0) {
+                        if(!(i==0 && j==0)) availablePIDS.add((byte)((i*8)+j));
+                    }
                 }
             }
     }
