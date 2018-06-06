@@ -20,9 +20,9 @@ public class AutoInitialization extends Initialization {
         try
         {
             byte[] protoclolAnswer = serialCommunication.waitAndReadData(serialPort);
-            if (!Arrays.equals(protoclolAnswer, expectedSelectProtocolAnswer.getBytes())) {
-                throw new InitializationException("Could not select protocol " + protocolName);
-            }
+            //if (!Arrays.equals(protoclolAnswer, expectedSelectProtocolAnswer.getBytes())) {
+            //    throw new InitializationException("Could not select protocol " + protocolName);
+            //}
         }
         catch(PortNotOpenException pnoe)
         {
@@ -30,7 +30,7 @@ public class AutoInitialization extends Initialization {
         }
         catch(Exception e)
         {
-            System.err.println("An exception occurred while initializing.");
+            System.err.println("An exception occurred while initializing. - "+e.getClass().getSimpleName()+": "+e.getMessage());
         }
     }
 
@@ -40,18 +40,19 @@ public class AutoInitialization extends Initialization {
         {
             byte[] initializeAnswer = serialCommunication.waitAndReadData(serialPort);
             serialCommunication.waitAndReadData(serialPort);
-            if(!Arrays.equals("SEARCHING...".getBytes(), initializeAnswer))
+            /*if(!Arrays.equals("SEARCHING...".getBytes(), initializeAnswer))
             {
                 throw new InitializationException("Could not initialize connection in protocol " + protocolName + ". Expected answer in step one was 'SEARCHING...' but received '" + new String(initializeAnswer) + "' instead");
-            }
-            initializeAnswer = serialCommunication.waitAndReadData(serialPort);
+            }*/
+            //initializeAnswer = serialCommunication.waitAndReadData(serialPort);
             /*if(!Arrays.equals("OK\n".getBytes(), new byte[]{initializeAnswer[0], initializeAnswer[1], initializeAnswer[3]}))
             {
                 throw new InitializationException("Could not initialize connection in protocol " + protocolName + ". Expected answer in step two was 'OK' but received '" + new String(initializeAnswer) + "' instead");
             }*/
-            initializeAnswer = DatatypeConverter.parseHexBinary(new String(initializeAnswer).substring(0,20).replace(" ", "").replace("\n", "")); // Most likely it's wrong XD
-            Thread.sleep(1000);
-            //extractAvailablePIDS(initializeAnswer);
+            //initializeAnswer = DatatypeConverter.parseHexBinary(new String(initializeAnswer).substring("SEARCHING...".length()).replace(" ", "").replace("\n", "")); // Most likely it's wrong XD
+            initializeAnswer = ELMInterface.convertELMdataToByteArray(new String(initializeAnswer).substring("SEARCHING...".length()).replace(" ", "").replace("\n", "").replace("\r",""));
+            //Thread.sleep(1000);
+            extractAvailablePIDS(initializeAnswer);
         }
         catch(PortNotOpenException pnoe)
         {

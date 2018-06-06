@@ -31,7 +31,7 @@ public class RootWindow extends Application {
             primaryStage.show();
             elmInterface = new ELMInterface();
             elmInterface.initialize("ttyUSB0");
-            Task rpmTask = new Task<Void>() {
+            Task readoutTask = new Task<Void>() {
 
 				@Override
 				protected Void call() throws Exception {
@@ -45,10 +45,10 @@ public class RootWindow extends Application {
 								updateMessage(readouts.get(0).getValue()+" "+readouts.get(0).getUnit());
 								System.out.println(readouts.get(0).getName()+": "+readouts.get(0).getValue()+" "+readouts.get(0).getUnit());
 							} else {
-								updateMessage("N/A");
+								updateMessage("???");
 							}
 						} catch(Exception e) {
-							updateMessage("N/A");
+                            System.err.println("Exception in readoutTask: "+e.getClass().getSimpleName()+": "+e.getMessage());
 						}
 						Thread.sleep(666);
 					}
@@ -58,9 +58,9 @@ public class RootWindow extends Application {
 				}
             	
             };
-            Label rpmlabel = (Label) scene.lookup("#"+RPMReadout.class.getSimpleName()+"Value");             
-            new Thread(rpmTask).start();
-	    rpmlabel.textProperty().bind(rpmTask.messageProperty());
+            Label rpmlabel = (Label) scene.lookup("#"+ThrottlePositionReadout.class.getSimpleName()+"Value");
+            new Thread(readoutTask).start();
+    	    rpmlabel.textProperty().bind(readoutTask.messageProperty());
         } catch(IOException ioe) {
             System.err.println("IOException caught during start: "+ioe.getLocalizedMessage());
         }

@@ -98,7 +98,7 @@ public abstract class Readout {
      */
     public double getValue() throws InvalidReadoutException {
         if(readoutBuffer.length != getExpectedBytes()) {
-            throw new InvalidReadoutException("Invalid number of bytes (readout type mismatch?)");
+            throw new InvalidReadoutException("Invalid number of bytes (readout type mismatch? got "+readoutBuffer.length+", expected "+getExpectedBytes()+")");
         }
         calculateValue();
         return value;

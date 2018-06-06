@@ -86,20 +86,30 @@ public class ELMInterface {
 				} catch(Exception e) {
 					System.err.println("bartosz sakowicz ty kurwo: " + e.getClass().getSimpleName() + ": " + e.getMessage());
 				}
+				System.out.println("[ELM] Known readouts:");
 				init.availablePIDS.forEach((pid) -> {
 					if(Readouts.readoutMap.containsKey(pid)) {
-						Readouts.readoutMap.get(pid);
+						Class<?> readoutClass = Readouts.readoutMap.get(pid);
+						System.out.println(readoutClass.getSimpleName());
+						try {
+							readouts.add((Readout) readoutClass.newInstance());
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
 					}
 				});
-	            readouts.add(new RPMReadout());
+	            //readouts.add(new RPMReadout());
 	            readoutDispatchThread = new Thread(new Runnable() {
 	                @Override
 	                public void run() {
-	                    try {
+
 	                        while(currentState != ConnectionState.CLOSING) {
-				    serialCommunication.sendData(serialPort,"010C\n".getBytes());
+								try {
+	                        	byte[] tmp = new byte[1];
+	                        	tmp[0] = readouts.get(0).getPid();
+				    serialCommunication.sendData(serialPort,("01"+DatatypeConverter.printHexBinary(tmp)+"\n").getBytes());
 	                            String rawData = new String(serialCommunication.waitAndReadData(serialPort));
-	                            byte[] elmData = convertELMdataToByteArray(extractData(rawData.substring(5)));
+	                            byte[] elmData = convertELMdataToByteArray(extractData(rawData));
 				    System.out.println(elmData.length);
 	                            readouts.forEach((readout) -> {
 					if(elmData.length > 2) {
@@ -109,14 +119,14 @@ public class ELMInterface {
 					}
 	                            });
 	                            Thread.sleep(666);
-	                        }
+	                        } catch(Exception e) {
+									System.err.println("Exception in readout dispatcher: "+e.getClass().getName()+" - "+e.getMessage());
+								}
 	                  
-	                    } catch(Exception e) {
-	                        System.err.println("Exception in readout dispatcher: "+e.getClass().getName()+" - "+e.getMessage());
 	                    }
 	                }
 	            });
-	            //readoutDispatchThread.start();
+	            readoutDispatchThread.start();
 	        } catch(Exception e) {
 	            System.err.println("Exception caught in ELMInterface: "+e.getClass().getName()+" - "+e.getMessage());
 	            currentState = ConnectionState.ERROR;
@@ -188,7 +198,7 @@ public class ELMInterface {
     }
 
     public static byte[] convertELMdataToByteArray(String s) {
-        return DatatypeConverter.parseHexBinary(s.replace(" ",""));
+        return DatatypeConverter.parseHexBinary(s.replace(" ", "").replace("\n", "").replace("\r",""));
     }
 
     public String getName() {

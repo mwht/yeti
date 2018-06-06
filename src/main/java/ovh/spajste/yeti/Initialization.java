@@ -14,8 +14,9 @@ public abstract class Initialization {
 
     public ArrayList<Byte> availablePIDS = new ArrayList<>();
 
-    private byte[] initializeSequence = {0x01,0x00,0x0A}; // 0100\n
+    private byte[] initializeSequence = {0x30,0x31,0x30,0x30,0x0A}; // 0100\n
     private byte[] elmResetSequence = {0x41,0x54,0x20,0x5A,0x0A}; // AT Z\n
+    private byte[] echoOffSequence = "ATE0\n".getBytes();
     private String elmIdentificator = "Unknown";
 
     public Initialization(SerialPort serialPort, SerialCommunication serialCommunication)
@@ -51,6 +52,8 @@ public abstract class Initialization {
         resetElm();
         serialCommunication.sendData(serialPort, protocolSelectSequence.getBytes());
         reciveProtocolSelectAnswer();
+        serialCommunication.sendData(serialPort, echoOffSequence);
+        serialCommunication.waitAndReadData(serialPort);
         serialCommunication.sendData(serialPort, initializeSequence);
         reciveInitailizationAnswer();
     }
