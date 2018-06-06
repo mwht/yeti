@@ -18,7 +18,7 @@ public abstract class Initialization {
     private byte[] elmResetSequence = {0x41,0x54,0x20,0x5A,0x0A}; // AT Z\n
     private String elmIdentificator = "Unknown";
 
-    Initialization(SerialPort serialPort, SerialCommunication serialCommunication)
+    public Initialization(SerialPort serialPort, SerialCommunication serialCommunication)
     {
         protocolName = "Unknown";
         protocolSelectSequence = "Unknown";
