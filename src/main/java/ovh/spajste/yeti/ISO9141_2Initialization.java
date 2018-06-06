@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class ISO9141_2Initialization extends Initialization {
 
-    ISO9141_2Initialization(SerialPort serialPort, SerialCommunication serialCommunication)
+    public ISO9141_2Initialization(SerialPort serialPort, SerialCommunication serialCommunication)
     {
         super(serialPort, serialCommunication);
         protocolName = "ISO 9141-2";
