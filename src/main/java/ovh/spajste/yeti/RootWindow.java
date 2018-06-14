@@ -68,7 +68,11 @@ public class RootWindow extends Application {
                             elmInterface.getReadoutsData().forEach((readout) -> {
                                 if(readout.getClass() == labelClass) {
                                     try {
-                                        label.setText(readout.getValue() + " " + readout.getUnit());
+                                        if(readout.isActive()) {
+                                            label.setText(readout.getValue() + " " + readout.getUnit());
+                                        } else {
+                                            label.setText("-");
+                                        }
                                     } catch(InvalidReadoutException ine) {
                                         label.setText("N/A");
                                         System.err.println(ine.getMessage());

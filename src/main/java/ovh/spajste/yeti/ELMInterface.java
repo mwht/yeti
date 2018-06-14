@@ -107,22 +107,23 @@ public class ELMInterface {
 	                        while(currentState != ConnectionState.CLOSING) {
 								try {
 									readouts.forEach((readout -> {
-										try {
-											byte[] tmp = new byte[1];
-											tmp[0] = readout.getPid();
-											serialCommunication.sendData(serialPort, ("01" + DatatypeConverter.printHexBinary(tmp) + "\n").getBytes());
-											String rawData = new String(serialCommunication.waitAndReadData(serialPort));
-											byte[] elmData = convertELMdataToByteArray(extractData(rawData));
-											System.out.println(elmData.length);
-											if (elmData.length > 2) {
-												if (elmData[1] == readout.getPid()) {
-													readout.setReadoutBuffer(Arrays.copyOfRange(elmData, 2, elmData.length));
+										if(readout.isActive()) {
+											try {
+												byte[] tmp = new byte[1];
+												tmp[0] = readout.getPid();
+												serialCommunication.sendData(serialPort, ("01" + DatatypeConverter.printHexBinary(tmp) + "\n").getBytes());
+												String rawData = new String(serialCommunication.waitAndReadData(serialPort));
+												byte[] elmData = convertELMdataToByteArray(extractData(rawData));
+												System.out.println(elmData.length);
+												if (elmData.length > 2) {
+													if (elmData[1] == readout.getPid()) {
+														readout.setReadoutBuffer(Arrays.copyOfRange(elmData, 2, elmData.length));
+													}
 												}
+											} catch (Exception e) {
+												e.printStackTrace();
 											}
-										} catch (Exception e) {
-											e.printStackTrace();
 										}
-
 									}));
 									Thread.sleep(666);
 	                        } catch(Exception e) {
