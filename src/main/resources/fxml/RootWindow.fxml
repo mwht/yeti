@@ -71,9 +71,9 @@
                                     <VBox cache="true" cacheHint="SCALE" prefHeight="700.0" prefWidth="681.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0">
                                        <children>
                                           <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="96.0" prefWidth="681.0" text="Chart 1" />
-                                          <LineChart prefHeight="343.0" prefWidth="700.0">
+                                          <LineChart id="readoutsChart" prefHeight="343.0" prefWidth="700.0">
                                             <xAxis>
-                                              <CategoryAxis side="BOTTOM" />
+                                              <NumberAxis side="BOTTOM" />
                                             </xAxis>
                                             <yAxis>
                                               <NumberAxis side="LEFT" />

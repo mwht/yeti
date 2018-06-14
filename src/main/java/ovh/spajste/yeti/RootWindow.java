@@ -4,6 +4,8 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -19,6 +21,8 @@ public class RootWindow extends Application {
     public static AnchorPane root;
     public static int cycle = 0;
     private Map<Class<?>,Label> labelMap;
+    public static int frames = 0;
+    private long startingChuj = 0;
 
     public static void main(String[] args) {
         launch(args);
@@ -33,6 +37,7 @@ public class RootWindow extends Application {
             primaryStage.setScene(scene);
             primaryStage.setTitle("Yeti by SpajsTech Ltd. 2018");
             primaryStage.show();
+
             elmInterface = new ELMInterface();
             //elmInterface.initialize("COM3");
             labelMap = new HashMap<>();
@@ -66,30 +71,29 @@ public class RootWindow extends Application {
 
             };
             timer.start();
-/*            LineChart line = (LineChart) scene.lookup("#readoutsChart");
-    	    line.getXAxis().setLabel("Time [ms]");
-    	    line.getYAxis().setLabel("Value [%]");
+
+            LineChart line = (LineChart) scene.lookup("#readoutsChart");
+            line.getXAxis().setLabel("Time [ms]");
+            line.getYAxis().setLabel("Value [rpm]");
+            line.getXAxis().setAutoRanging(true);
+            line.setTitle("RPM Readout");
+
             XYChart.Series series = new XYChart.Series();
-            Task fifo = new Task<Void>() {
-
-                @Override
-                protected Void call() throws Exception {
-                    for(int i=0;i<10;i++) {
-                        series.getData().add(new XYChart.Data(i+cycle,Math.sin(i+cycle)));
-                        cycle = 10;
-                    }
-                    while(!isCancelled()) {
-                        series.getData().remove(0);
-                        series.getData().add(new XYChart.Data(cycle,Math.sin(cycle)));
-                        cycle++;
-                        Thread.sleep(666);
-                    }
-                    return null;
-                }
-
-            };
             line.getData().add(series);
-            new Thread(fifo).start();*/
+            AnimationTimer timer = new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    if(startingChuj == 0) startingChuj = now;
+                    if(frames > 20) {
+                        //series.getData().remove(0);
+                        series.getData().add(new XYChart.Data((now-startingChuj)/1000000, Math.sin(now-startingChuj)));
+                        cycle++;
+                        frames = 0;
+                    }
+                    frames++;
+                }
+            };
+            timer.start();
         } catch(IOException ioe) {
             System.err.println("IOException caught during start: "+ioe.getLocalizedMessage());
         }
