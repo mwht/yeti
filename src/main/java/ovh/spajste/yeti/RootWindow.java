@@ -22,7 +22,7 @@ public class RootWindow extends Application {
     public static int cycle = 0;
     private Map<Class<?>,Label> labelMap;
     public static int frames = 0;
-    private long startingChuj = 0;
+    private long startingTime = 0;
 
     public static void main(String[] args) {
         launch(args);
@@ -39,7 +39,7 @@ public class RootWindow extends Application {
             primaryStage.show();
 
             elmInterface = new ELMInterface();
-            //elmInterface.initialize("COM3");
+            elmInterface.initialize("COM6");
             labelMap = new HashMap<>();
             Readouts.readoutMap.forEach((pid,readout) -> {
                 Label readoutLabel = (Label) scene.lookup("#"+readout.getSimpleName()+"Value");
@@ -49,6 +49,15 @@ public class RootWindow extends Application {
             CheckBox throttleCheckbox = (CheckBox) scene.lookup("#ThrottlePositionReadoutActive");
             throttleCheckbox.setSelected(true);
             throttleCheckbox.setDisable(false);
+
+            LineChart line = (LineChart) scene.lookup("#readoutsChart");
+            line.getXAxis().setLabel("Time [ms]");
+            line.getYAxis().setLabel("Value [rpm]");
+            line.getXAxis().setAutoRanging(true);
+            line.setTitle("RPM Readout");
+
+            XYChart.Series series = new XYChart.Series();
+            line.getData().add(series);
 
             AnimationTimer timer = new AnimationTimer() {
 
@@ -67,33 +76,28 @@ public class RootWindow extends Application {
                                 }
                             });
                     });
-                }
 
-            };
-            timer.start();
-
-            LineChart line = (LineChart) scene.lookup("#readoutsChart");
-            line.getXAxis().setLabel("Time [ms]");
-            line.getYAxis().setLabel("Value [rpm]");
-            line.getXAxis().setAutoRanging(true);
-            line.setTitle("RPM Readout");
-
-            XYChart.Series series = new XYChart.Series();
-            line.getData().add(series);
-            AnimationTimer timer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    if(startingChuj == 0) startingChuj = now;
+                    if(startingTime == 0) startingTime = now;
                     if(frames > 20) {
                         //series.getData().remove(0);
-                        series.getData().add(new XYChart.Data((now-startingChuj)/1000000, Math.sin(now-startingChuj)));
+                        elmInterface.getReadoutsData().forEach((readout) -> {
+                            if(readout.getClass() == RPMReadout.class) {
+                                try {
+                                    series.getData().add(new XYChart.Data((now - startingTime) / 1000000, readout.getValue()));
+                                } catch(InvalidReadoutException ine) {
+                                    System.err.println("Error adding point to chart: " + ine.getMessage());
+                                }
+                            }
+                        });
                         cycle++;
                         frames = 0;
                     }
                     frames++;
                 }
+
             };
             timer.start();
+
         } catch(IOException ioe) {
             System.err.println("IOException caught during start: "+ioe.getLocalizedMessage());
         }
