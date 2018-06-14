@@ -38,20 +38,20 @@
                                     <CheckBox fx:id="EngineCoolantTemperatureActive" disable="true" layoutX="42.0" layoutY="24.0" mnemonicParsing="false" text="EngineCoolantTemperature" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="110.0" />
                                     <CheckBox fx:id="IntakeAirTemperatureActive" disable="true" mnemonicParsing="false" text="IntakeAirTemperature" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="140.0" />
                                     <Label fx:id="RPMReadoutValue" layoutX="284.0" layoutY="52.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
-                                    <Label fx:id="CalculatedEngineLoadValue" layoutX="284.0" layoutY="80.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
-                                    <Label fx:id="EngineCoolantTemperatureValue" layoutX="284.0" layoutY="110.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
-                                    <Label fx:id="IntakeAirTemperatureValue" layoutX="284.0" layoutY="140.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
-                                    <Label fx:id="IntakeMainfoldAbsolutePressureValue" layoutX="284.0" layoutY="170.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
+                                    <Label fx:id="CalculatedEngineLoadReadoutValue" layoutX="284.0" layoutY="80.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
+                                    <Label fx:id="EngineCoolantTemperatureReadoutValue" layoutX="284.0" layoutY="110.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
+                                    <Label fx:id="IntakeAirTemperatureReadoutValue" layoutX="284.0" layoutY="140.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
+                                    <Label fx:id="IntakeMainfoldAbsolutePressureReadoutValue" layoutX="284.0" layoutY="170.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
                                     <CheckBox fx:id="LongTermFuelTrimBank1Active" disable="true" layoutX="50.0" layoutY="199.0" mnemonicParsing="false" text="LongTermFuelTrimBank1" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="200.0" />
                                     <CheckBox fx:id="ShortTemFuelTrimBank1Active" disable="true" layoutX="50.0" layoutY="233.0" mnemonicParsing="false" text="ShortTemFuelTrimBank1" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="230.0" />
                                     <CheckBox fx:id="ThrottlePositionReadoutActive" disable="true" layoutX="50.0" layoutY="264.0" mnemonicParsing="false" text="ThrottlePosition" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="260.0" />
                                     <CheckBox fx:id="TimingAdvanceActive" disable="true" layoutX="50.0" layoutY="295.0" mnemonicParsing="false" text="TimingAdvance" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="290.0" />
                                     <CheckBox fx:id="VehicleSpeedActive" disable="true" layoutX="50.0" layoutY="327.0" mnemonicParsing="false" text="VehicleSpeed" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="320.0" />
-                                    <Label fx:id="LongTermFuelTrimBank1Value" layoutX="284.0" layoutY="200.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
-                                    <Label fx:id="ShortTemFuelTrimBank1Value" layoutX="284.0" layoutY="230.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
+                                    <Label fx:id="LongTermFuelTrimBank1ReadoutValue" layoutX="284.0" layoutY="200.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
+                                    <Label fx:id="ShortTemFuelTrimBank1ReadoutValue" layoutX="284.0" layoutY="230.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
                                     <Label fx:id="ThrottlePositionReadoutValue" layoutX="284.0" layoutY="260.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
-                                    <Label fx:id="TimingAdvanceValue" layoutX="284.0" layoutY="290.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
-                                    <Label fx:id="VehicleSpeedValue" layoutX="284.0" layoutY="320.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
+                                    <Label fx:id="TimingAdvanceReadoutValue" layoutX="284.0" layoutY="290.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
+                                    <Label fx:id="VehicleSpeedReadoutValue" layoutX="284.0" layoutY="320.0" prefHeight="17.0" prefWidth="100.0" text="N/A" />
                                  </children>
                               </AnchorPane>
                           </content>

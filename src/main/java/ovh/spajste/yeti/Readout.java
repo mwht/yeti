@@ -1,11 +1,13 @@
 package ovh.spajste.yeti;
 
+import java.util.Observable;
+
 /**
  * Readout is abstract class representing generic readout from OBD-II/ELM interface.
  *
  * @author Sebastian Madejski
  */
-public abstract class Readout {
+public abstract class Readout extends Observable {
     protected String name;
     protected double value;
     protected byte pid;
