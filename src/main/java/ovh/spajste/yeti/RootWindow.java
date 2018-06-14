@@ -2,6 +2,8 @@ package ovh.spajste.yeti;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
@@ -21,6 +23,7 @@ public class RootWindow extends Application {
     public static AnchorPane root;
     public static int cycle = 0;
     private Map<Class<?>,Label> labelMap;
+    private Map<Class<?>,CheckBox> activeMap;
     public static int frames = 0;
     private long startingTime = 0;
 
@@ -39,16 +42,32 @@ public class RootWindow extends Application {
             primaryStage.show();
 
             elmInterface = new ELMInterface();
-            elmInterface.initialize("COM6");
+            //elmInterface.initialize("COM6");
             labelMap = new HashMap<>();
+            activeMap = new HashMap<>();
+            EventHandler handleActive = new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    if (event.getSource() instanceof CheckBox) {
+                        CheckBox chk = (CheckBox) event.getSource();
+                        activeMap.forEach((readout,chkbox) -> {
+                            if(chkbox == chk) {
+                                Readout r = (Readout) readout.cast(Readout.class);
+                                r.setActive(chk.isSelected());
+                            }
+                        });
+                    }
+                }
+            };
+
             Readouts.readoutMap.forEach((pid,readout) -> {
                 Label readoutLabel = (Label) scene.lookup("#"+readout.getSimpleName()+"Value");
                 labelMap.put(readout,readoutLabel);
+                CheckBox readoutActive = (CheckBox) scene.lookup("#"+readout.getSimpleName()+"Active");
+                activeMap.put(readout,readoutActive);
+                readoutActive.setOnAction(handleActive);
             });
 
-            CheckBox throttleCheckbox = (CheckBox) scene.lookup("#ThrottlePositionReadoutActive");
-            throttleCheckbox.setSelected(true);
-            throttleCheckbox.setDisable(false);
 
             LineChart line = (LineChart) scene.lookup("#readoutsChart");
             line.getXAxis().setLabel("Time [ms]");
