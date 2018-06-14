@@ -12,6 +12,7 @@ public class ThrottlePositionReadout extends Readout {
 
     public void calculateValue() {
         value = ((100.0/255.0)*readoutBuffer[0]);
+        value = Math.round(value * 100) / 100;
     }
 
     public int getExpectedBytes() {
