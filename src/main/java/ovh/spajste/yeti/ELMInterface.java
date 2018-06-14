@@ -85,7 +85,7 @@ public class ELMInterface {
 				try {
 					init.initialize();
 				} catch(Exception e) {
-					System.err.println("bartosz sakowicz ty kurwo: " + e.getClass().getSimpleName() + ": " + e.getMessage());
+					System.err.println("Error occured during initialization: " + e.getClass().getSimpleName() + ": " + e.getMessage());
 				}
 				System.out.println("[ELM] Known readouts:");
 				init.availablePIDS.forEach((pid) -> {
