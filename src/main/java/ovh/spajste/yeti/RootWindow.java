@@ -34,12 +34,16 @@ public class RootWindow extends Application {
             primaryStage.setTitle("Yeti by SpajsTech Ltd. 2018");
             primaryStage.show();
             elmInterface = new ELMInterface();
-            elmInterface.initialize("COM3");
+            //elmInterface.initialize("COM3");
             labelMap = new HashMap<>();
             Readouts.readoutMap.forEach((pid,readout) -> {
                 Label readoutLabel = (Label) scene.lookup("#"+readout.getSimpleName()+"Value");
                 labelMap.put(readout,readoutLabel);
             });
+
+            CheckBox throttleCheckbox = (CheckBox) scene.lookup("#ThrottlePositionReadoutActive");
+            throttleCheckbox.setSelected(true);
+            throttleCheckbox.setDisable(false);
 
             AnimationTimer timer = new AnimationTimer() {
 
