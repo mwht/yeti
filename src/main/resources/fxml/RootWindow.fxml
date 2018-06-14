@@ -14,13 +14,10 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ovh.spajste.yeti.gui.RootMenuController">
@@ -121,51 +118,14 @@
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="535.0" prefWidth="695.0">
                                  <children>
                                     <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <center>
-                                          <GridPane gridLinesVisible="true" prefHeight="674.0" prefWidth="700.0" BorderPane.alignment="CENTER">
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                             <children>
-                                                <ImageView fitHeight="177.0" fitWidth="195.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
-                                                   <image>
-                                                      <Image url="@../gfx/placeholder.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <ImageView fitHeight="178.0" fitWidth="192.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">
-                                                   <image>
-                                                      <Image url="@../gfx/placeholder.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <ImageView fitHeight="176.0" fitWidth="201.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                                                   <image>
-                                                      <Image url="@../gfx/placeholder.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <ImageView fitHeight="180.0" fitWidth="194.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                                                   <image>
-                                                      <Image url="@../gfx/placeholder.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <ImageView fitHeight="178.0" fitWidth="205.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                                                   <image>
-                                                      <Image url="@../gfx/placeholder.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <ImageView fitHeight="179.0" fitWidth="191.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                                                   <image>
-                                                      <Image url="@../gfx/placeholder.png" />
-                                                   </image>
-                                                </ImageView>
-                                             </children>
-                                          </GridPane>
-                                       </center>
+                                       <top>
+                                          <TableView prefHeight="542.0" prefWidth="698.0" BorderPane.alignment="CENTER">
+                                            <columns>
+                                              <TableColumn prefWidth="348.0" text="Error code" />
+                                              <TableColumn minWidth="0.0" prefWidth="349.0" text="Name of the error" />
+                                            </columns>
+                                          </TableView>
+                                       </top>
                                     </BorderPane>
                                  </children>
                               </AnchorPane>
