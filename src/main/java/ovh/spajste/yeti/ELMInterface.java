@@ -3,6 +3,7 @@ package ovh.spajste.yeti;
 import com.fazecast.jSerialComm.SerialPort;
 
 import javax.xml.bind.DatatypeConverter;
+import java.lang.reflect.Executable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -105,20 +106,25 @@ public class ELMInterface {
 
 	                        while(currentState != ConnectionState.CLOSING) {
 								try {
-	                        	byte[] tmp = new byte[1];
-	                        	tmp[0] = readouts.get(0).getPid();
-				    serialCommunication.sendData(serialPort,("01"+DatatypeConverter.printHexBinary(tmp)+"\n").getBytes());
-	                            String rawData = new String(serialCommunication.waitAndReadData(serialPort));
-	                            byte[] elmData = convertELMdataToByteArray(extractData(rawData));
-				    System.out.println(elmData.length);
-	                            readouts.forEach((readout) -> {
-					if(elmData.length > 2) {
-		                                if (elmData[1] == readout.getPid()) {
-		                                    readout.setReadoutBuffer(Arrays.copyOfRange(elmData, 2, elmData.length));
-	                                	}
-					}
-	                            });
-	                            Thread.sleep(666);
+									readouts.forEach((readout -> {
+										try {
+											byte[] tmp = new byte[1];
+											tmp[0] = readout.getPid();
+											serialCommunication.sendData(serialPort, ("01" + DatatypeConverter.printHexBinary(tmp) + "\n").getBytes());
+											String rawData = new String(serialCommunication.waitAndReadData(serialPort));
+											byte[] elmData = convertELMdataToByteArray(extractData(rawData));
+											System.out.println(elmData.length);
+											if (elmData.length > 2) {
+												if (elmData[1] == readout.getPid()) {
+													readout.setReadoutBuffer(Arrays.copyOfRange(elmData, 2, elmData.length));
+												}
+											}
+										} catch (Exception e) {
+											e.printStackTrace();
+										}
+
+									}));
+									Thread.sleep(666);
 	                        } catch(Exception e) {
 									System.err.println("Exception in readout dispatcher: "+e.getClass().getName()+" - "+e.getMessage());
 								}
@@ -138,7 +144,6 @@ public class ELMInterface {
     	ArrayList<Readout> newReadouts = new ArrayList<>();
 	readouts.forEach((elem) -> {
 		newReadouts.add(elem);
-		System.out.println("dodajemy chuja");
 	});
 	return newReadouts;
     }
