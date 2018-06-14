@@ -35,7 +35,7 @@ public abstract class Initialization {
     {
             for(int i=0;i<4;i++) {
                 for(int j=0;j<8;j++) {
-                    if((pids[i] & (1<<(8-j))) != 0) {
+                    if((pids[i+2] & (1<<(8-j))) != 0) {
                         if(!(i==0 && j==0)) availablePIDS.add((byte)((i*8)+j));
                     }
                 }
