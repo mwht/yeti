@@ -122,6 +122,7 @@ public abstract class Readout extends Observable {
     public void setActive(boolean status)
     {
         active = status;
+        System.out.println("state: "+status);
     }
 
     /**

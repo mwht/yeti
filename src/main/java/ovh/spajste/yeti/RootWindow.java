@@ -52,8 +52,14 @@ public class RootWindow extends Application {
                         CheckBox chk = (CheckBox) event.getSource();
                         activeMap.forEach((readout,chkbox) -> {
                             if(chkbox == chk) {
-                                Readout r = (Readout) readout.cast(Readout.class);
-                                r.setActive(chk.isSelected());
+                                //Readout r = (Readout) readout;
+                                //r.setActive(chk.isSelected());
+                                System.out.println(readout.getTypeName());
+                                elmInterface.getReadoutsData().forEach((elmreadout) -> {
+                                    if(readout == elmreadout.getClass()) {
+                                        elmreadout.setActive(chk.isSelected());
+                                    }
+                                });
                             }
                         });
                     }
@@ -64,8 +70,11 @@ public class RootWindow extends Application {
                 Label readoutLabel = (Label) scene.lookup("#"+readout.getSimpleName()+"Value");
                 labelMap.put(readout,readoutLabel);
                 CheckBox readoutActive = (CheckBox) scene.lookup("#"+readout.getSimpleName()+"Active");
-                activeMap.put(readout,readoutActive);
-                readoutActive.setOnAction(handleActive);
+                if(readoutActive != null) {
+                    activeMap.put(readout,readoutActive);
+                    readoutActive.setDisable(false);
+                    readoutActive.setOnAction(handleActive);
+                }
             });
 
 
