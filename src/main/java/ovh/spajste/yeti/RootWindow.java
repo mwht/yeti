@@ -8,12 +8,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +28,7 @@ public class RootWindow extends Application {
     private Map<Class<?>,CheckBox> activeMap;
     public static int frames = 0;
     private long startingTime = 0;
+    public static String PortName = "";
 
     public static void main(String[] args) {
         launch(args);
@@ -40,6 +43,7 @@ public class RootWindow extends Application {
             primaryStage.setScene(scene);
             primaryStage.setTitle("Yeti by SpajsTech Ltd. 2018");
             primaryStage.show();
+
 
             elmInterface = new ELMInterface();
             //elmInterface.initialize("COM6");
