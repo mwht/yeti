@@ -40,20 +40,10 @@ public class RootMenuController {
         }
     }
 
-    @FXML public void clearPortMenuItem()
-    {
-        //portMenu.getItems().remove(0,portMenu.getItems().size());
-        //portMenu.getItems().add(new MenuItem("Empty"));
-    }
-
     @FXML public void quitItem() {
         Platform.exit();
     }
 
-    @FXML public void fillRpmLabel()
-    {
-        rpmlabel.setText("test");
-    }
 
     @FXML public void initialize()
     {
