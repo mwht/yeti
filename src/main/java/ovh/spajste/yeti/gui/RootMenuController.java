@@ -31,6 +31,7 @@ public class RootMenuController {
                         temp.setId(s);
                         temp.setOnAction(a->{
                             RootWindow.PortName = s;
+                            RootWindow.elmInterface.initialize(s);
                         });
                         portMenu.getItems().add(temp);
                     }
