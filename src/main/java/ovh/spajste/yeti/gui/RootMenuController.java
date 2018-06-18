@@ -74,6 +74,7 @@ public class RootMenuController {
                 "\n" +
                 "Yeti by SpajsTech\n" +
                 "Copyright (c) SpajsTech 2018");
+        dialog.setTitle("About Yeti/SpajsTech");
         dialog.showAndWait();
     }
 }
