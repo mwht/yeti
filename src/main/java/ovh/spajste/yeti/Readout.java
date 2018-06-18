@@ -1,5 +1,8 @@
 package ovh.spajste.yeti;
 
+import java.io.IOException;
+import java.io.ObjectStreamException;
+import java.io.Serializable;
 import java.util.Observable;
 
 /**
@@ -7,7 +10,7 @@ import java.util.Observable;
  *
  * @author Sebastian Madejski
  */
-public abstract class Readout extends Observable {
+public abstract class Readout implements Serializable {
     protected String name;
     protected double value;
     protected byte pid;
@@ -132,5 +135,22 @@ public abstract class Readout extends Observable {
     public boolean isActive()
     {
         return active;
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        out.writeByte(pid);
+        out.writeByte(getExpectedBytes());
+        out.write(readoutBuffer);
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        pid = in.readByte();
+        byte bufsize = in.readByte();
+        readoutBuffer = new byte[bufsize];
+        in.read(readoutBuffer,0,bufsize);
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+
     }
 }
