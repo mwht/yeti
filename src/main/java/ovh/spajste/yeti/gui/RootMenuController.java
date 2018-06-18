@@ -1,6 +1,7 @@
 package ovh.spajste.yeti.gui;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -42,6 +43,7 @@ public class RootMenuController {
     }
 
     @FXML public void quitItem() {
+        RootWindow.elmInterface.close();
         Platform.exit();
     }
 
@@ -49,5 +51,13 @@ public class RootMenuController {
     @FXML public void initialize()
     {
         addPortMenuItem();
+    }
+
+    @FXML public void startLogging(ActionEvent actionEvent) {
+        RootWindow.elmInterface.startWriteToFile();
+    }
+
+    @FXML public void stopLogging(ActionEvent actionEvent) {
+        RootWindow.elmInterface.stopWriteToFile();
     }
 }

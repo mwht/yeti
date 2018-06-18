@@ -3,6 +3,8 @@ package ovh.spajste.yeti;
 import com.fazecast.jSerialComm.SerialPort;
 
 import javax.xml.bind.DatatypeConverter;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.Executable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +33,11 @@ public class ELMInterface {
     private String selectedPort;
     private Thread readoutDispatchThread;
     private boolean readyToClose;
-    private enum Protocol {
+    private boolean writeToFile;
+    private FileOutputStream fos;
+    private ObjectOutputStream oos;
+
+	private enum Protocol {
         AUTOMATIC,
         SAE_J1850_PWM,
         SAE_J1850_VPW,
@@ -125,12 +131,16 @@ public class ELMInterface {
 											}
 										}
 									}));
+									if(writeToFile) {
+										oos.writeObject(readouts);
+									}
 									Thread.sleep(666);
 	                        } catch(Exception e) {
 									System.err.println("Exception in readout dispatcher: "+e.getClass().getName()+" - "+e.getMessage());
 								}
 	                  
 	                    }
+	                    currentState = ConnectionState.CLOSED;
 	                }
 	            });
 	            readoutDispatchThread.start();
@@ -140,6 +150,35 @@ public class ELMInterface {
 	        }
     	//}
     }
+
+    public void startWriteToFile() {
+    	if(!writeToFile) {
+			try {
+				fos = new FileOutputStream(System.currentTimeMillis() + ".yeti");
+				oos = new ObjectOutputStream(fos);
+				writeToFile = true;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+    		System.out.println("Already logging to file.");
+		}
+	}
+
+	public void stopWriteToFile() {
+		if(writeToFile) {
+			try {
+				oos.flush();
+				oos.close();
+				fos.close();
+				writeToFile = false;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("Not logging to file.");
+		}
+	}
     
     public List<Readout> getReadoutsData() {
     	ArrayList<Readout> newReadouts = new ArrayList<>();
@@ -165,11 +204,15 @@ public class ELMInterface {
 
     public void close() {
         try {
-        	currentState = ConnectionState.CLOSING;
-        	while(currentState == ConnectionState.CLOSING) {}
+			readoutDispatchThread.interrupt();
+			currentState = ConnectionState.CLOSING;
+        	//while(currentState == ConnectionState.CLOSING) {}
 	        serialCommunication.sendData(serialPort,"AT PC\n".getBytes());
 	        serialCommunication.closeConnection(serialPort);
 	        currentState = ConnectionState.CLOSED;
+			if(writeToFile) {
+				stopWriteToFile();
+			}
         } catch(Exception e) {
             System.err.println("Exception caught in ELMInterface: "+e.getClass().getName()+" - "+e.getMessage());
         }

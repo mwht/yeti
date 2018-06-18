@@ -146,6 +146,12 @@
       <MenuBar prefHeight="29.0" prefWidth="700.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#startLogging" text="Start logging" />
+              </items>
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#stopLogging" text="Stop logging" />
+              </items>
             <items>
               <MenuItem mnemonicParsing="false" onAction="#quitItem" text="Quit" />
             </items>
