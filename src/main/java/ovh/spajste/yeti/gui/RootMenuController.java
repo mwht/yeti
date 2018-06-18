@@ -3,9 +3,7 @@ package ovh.spajste.yeti.gui;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import ovh.spajste.yeti.RootWindow;
 
 import java.util.Arrays;
@@ -59,5 +57,23 @@ public class RootMenuController {
 
     @FXML public void stopLogging(ActionEvent actionEvent) {
         RootWindow.elmInterface.stopWriteToFile();
+    }
+
+    @FXML public void onAboutClicked(ActionEvent actionEvent) {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.getDialogPane().getButtonTypes().add(new ButtonType("OK", ButtonBar.ButtonData.CANCEL_CLOSE));
+        dialog.setContentText("SpajsTech team are:\n" +
+                "===================\n" +
+                "\n" +
+                "* Michał Łukiański (@Lukkario) - low-level serial communication, design\n" +
+                "* Sebastian Madejski (@mwht) - core, ELM handling\n" +
+                "* Jakub Politowski (@F1S2O5P) - readout calculations, design\n" +
+                "* Adam Sylla (@adamski126) - GUI, readout calculations\n" +
+                "\n" +
+                "Special thanks to Wiktoria Sobczyk\n" +
+                "\n" +
+                "Yeti by SpajsTech\n" +
+                "Copyright (c) SpajsTech 2018");
+        dialog.showAndWait();
     }
 }
