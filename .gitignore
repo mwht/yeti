@@ -10,3 +10,6 @@ obdsm-2.iml
 .settings/
 .project
 .classpath
+
+# Yeti dump output
+.yeti
