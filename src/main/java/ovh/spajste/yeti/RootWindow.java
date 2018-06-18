@@ -46,7 +46,6 @@ public class RootWindow extends Application {
 
 
             elmInterface = new ELMInterface();
-            //elmInterface.initialize("COM6");
             labelMap = new HashMap<>();
             activeMap = new HashMap<>();
             EventHandler handleActive = new EventHandler<ActionEvent>() {
