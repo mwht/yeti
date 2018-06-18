@@ -12,4 +12,4 @@ obdsm-2.iml
 .classpath
 
 # Yeti dump output
-.yeti
+*.yeti
