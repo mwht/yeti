@@ -73,7 +73,9 @@ public class RootMenuController {
                 "Special thanks to Wiktoria Sobczyk\n" +
                 "\n" +
                 "Yeti by SpajsTech\n" +
-                "Copyright (c) SpajsTech 2018");
+                "Copyright (c) SpajsTech 2018\n" +
+                "\n" +
+                "\"Exception de'la addresse...\"");
         dialog.setTitle("About Yeti/SpajsTech");
         dialog.showAndWait();
     }
