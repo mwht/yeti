@@ -149,39 +149,11 @@ public class ELMInterface {
 	return newReadouts;
     }
 
-    private void mockLoop() {
-		readouts.add(new RPMReadout());
-		readoutDispatchThread = new Thread(() -> {
-			while(true) {
-                try {
-                	readouts.forEach((readout) -> {
-                		byte iter = 0;
-                		int dir = 1;
-                		byte[] mockBuffer = {
-                			(byte) 0x0B,
-                			(byte) 0x00
-                		};
-                		mockBuffer[1] = iter;
-                		iter += dir;
-                		if(iter == 255) dir = -1;
-                		if(iter == 0) dir = 1;
-                		readout.setReadoutBuffer(mockBuffer);
-                	});
-					Thread.sleep(666);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		readoutDispatchThread.start();
-	}
-
 	private String extractData(String input) {
 	try {
         	Pattern bytePattern = Pattern.compile("[0-9A-F]{2}\\s");
         	Matcher byteMatcher = bytePattern.matcher(input);
         	String result = "";
-		System.out.println("srogie grzyby: \""+input+"\"");
         	while(byteMatcher.find()) {
             		result += byteMatcher.group();
 	        }
