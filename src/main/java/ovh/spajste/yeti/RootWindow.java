@@ -12,6 +12,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -42,6 +43,7 @@ public class RootWindow extends Application {
             Scene scene = new Scene(root, 700, 600);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Yeti by SpajsTech Ltd. 2018");
+            primaryStage.getIcons().add(new Image((RootWindow.class.getResourceAsStream("/gfx/yeti.png"))));
             primaryStage.setOnCloseRequest(event -> {
                 elmInterface.close();
             });
