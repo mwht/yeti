@@ -85,15 +85,6 @@
                                               <NumberAxis side="LEFT" />
                                             </yAxis>
                                           </LineChart>
-                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="96.0" prefWidth="683.0" text="Chart 2" />
-                                          <StackedAreaChart>
-                                            <xAxis>
-                                              <NumberAxis side="BOTTOM" />
-                                            </xAxis>
-                                            <yAxis>
-                                              <NumberAxis side="LEFT" />
-                                            </yAxis>
-                                          </StackedAreaChart>
                                        </children>
                                        <opaqueInsets>
                                           <Insets />
