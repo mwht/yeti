@@ -42,8 +42,10 @@ public class RootWindow extends Application {
             Scene scene = new Scene(root, 700, 600);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Yeti by SpajsTech Ltd. 2018");
+            primaryStage.setOnCloseRequest(event -> {
+                elmInterface.close();
+            });
             primaryStage.show();
-
 
             elmInterface = new ELMInterface();
             labelMap = new HashMap<>();
