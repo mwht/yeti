@@ -132,6 +132,7 @@ public class ELMInterface {
 										}
 									}));
 									if(writeToFile) {
+										oos.writeLong(System.currentTimeMillis());
 										oos.writeObject(readouts);
 									}
 									Thread.sleep(666);
